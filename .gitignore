@@ -1,0 +1,44 @@
+# --- Python 产物 ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+build/
+dist/
+
+# --- 权重 / checkpoint / 数据产物 ---
+training/checkpoints/
+outputs/
+*.pth
+*.pt
+*.pkl
+*.ckpt
+*.npz
+*.npy
+
+# --- 日志 ---
+training/logs/
+*.log
+logs/
+
+# --- 训练可视化输出 ---
+training/mask_prompt_vis/
+
+# --- 第三方仓库（体积大，含预训练权重，请另行安装） ---
+third_party/
+
+# --- 数据集（如误放于仓库内） ---
+Diving48*/
+UCF101/
+rawframes/
+rgb/
+
+# --- 其他 ---
+slurm-*
+train_output/
+pretrained/
+.DS_Store
+
+# --- 编辑器/工具内部文件 ---
+.codebuddy/
+*.out

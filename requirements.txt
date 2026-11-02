@@ -1,0 +1,15 @@
+av
+einops==0.4.1
+ftfy==6.1.1
+numpy==1.24.4
+Pillow==9.0.1
+regex==2022.9.13
+setuptools==61.2.0
+
+# --- Mask Prompt (frozen Grounding-DINO + SAM2, optional) ---
+# Only needed when --mask_prompt_enabled is passed to
+# training/train_OPENAI_ALIGNED.py. Both install from source:
+#   pip install git+https://github.com/IDEA-Research/GroundingDINO.git
+#   pip install git+https://github.com/facebookresearch/sam2.git
+# groundingdino  # git install (needs CUDA toolchain to build its ops)
+# sam2           # git install; export SAM2_BUILD_CUDA=1 for the CUDA op
