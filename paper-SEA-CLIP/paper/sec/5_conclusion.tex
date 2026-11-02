@@ -1,0 +1,12 @@
+\section{Conclusion}
+\label{sec:conclusion}
+We presented MATE-CLIP, a parameter-efficient framework for multimodal adaptation and temporal enhancement that adapts a frozen CLIP backbone to video action recognition.
+We identified three complementary semantic gaps that jointly limit frozen CLIP video recognition: text-side information loss, video-side temporal-dynamics deficiency with discriminative dilution, and cross-modal directional misalignment.
+We addressed them with three plug-and-play modules, each targeting one stage of the information pipeline: AMTF performs multi-strategy text fusion on top of a static semantic branch so that the text prototypes go beyond the fixed generic template and capture the true action semantics, MGTA injects temporal-dynamics modeling through motion-guided region selection and implicit motion-correspondence attention that tracks where the action-critical regions move across frames, and BFEM bidirectionally enhances the video and text features with each other before classification.
+All modules operate on a frozen CLIP backbone with zero-initialized or identity-start gates, so the network coincides with the plain baseline at initialization and the CLIP backbone is never modified.
+Experiments on UCF101 and HMDB-51 show consistent improvements over strong CLIP-based baselines and confirm that the adaptation generalizes across datasets, and ablations verify the orthogonality and complementarity of the three modules.
+We believe MATE-CLIP provides a simple yet effective recipe for adapting frozen CLIP models to video action recognition.
+
+A natural direction for future work is to extend MATE-CLIP to the open-vocabulary and zero-shot settings, where the text anchors must generalize beyond the training classes and the alignment should not require class-specific prototypes.
+Another direction is to integrate MGTA with stronger base models (e.g., VideoMamba~\cite{liu2024video_mamba} or Video Swin~\cite{liu2022video_swin}) and to study the interaction between sparse attention and long-video temporal structure.
+Finally, the identity-start property of our modules suggests that they can be composed with other parameter-efficient adapters~\cite{hu2022lora,pan2022st_adapter} without retraining the backbone, which we leave as future work.

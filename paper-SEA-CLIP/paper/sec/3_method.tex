@@ -1,0 +1,251 @@
+\section{Method}
+\label{sec:method}
+
+\subsection{Overview}
+\label{sec:overview}
+\paragraph{Problem setting.}
+We study supervised video action recognition with a frozen CLIP backbone~\cite{radford2021clip}.
+A video clip is sampled into $T$ frames, and the frozen image encoder maps each frame into $N$ patch tokens, yielding spatial-temporal tokens $F \in \mathbb{R}^{T \times N \times d}$ with embedding dimension $d$.
+A set of class prompts (one per category) is encoded by the frozen text encoder into token sequences, from which we obtain text prototypes $Q \in \mathbb{R}^{C \times d}$ for $C$ classes.
+The goal is to map the video tokens $F$ to a video feature $v \in \mathbb{R}^{d}$ and to classify $v$ against $Q$ with a cosine classifier, while keeping both CLIP encoders frozen.
+For a class index $i$, the classification logit is
+\begin{equation}
+  \ell_i = \cos(v, Q_i) = \frac{v^\top Q_i}{\lVert v \rVert \, \lVert Q_i \rVert},
+  \label{eq:classify}
+\end{equation}
+and the plain frozen-CLIP baseline computes $Q_i$ from the single \texttt{[EOT]} token of the $i$-th prompt and obtains $v$ by uniformly pooling all frame tokens.
+Table~\ref{tab:notation} summarizes the notation used throughout this section.
+
+\paragraph{Framework.}
+Following Vita-CLIP~\cite{wasim2023vitaclip}, we adopt a frozen CLIP backbone as both the video and text encoders.
+MATE-CLIP augments this pipeline with three lightweight modules (Figure~\ref{fig:overview}), each addressing one of the gaps identified in Section~\ref{sec:intro}.
+On the text side, a static semantic branch is adaptively fused with a learnable branch refined by AMTF (Adaptive Multi-Strategy Text Fusion), producing class anchors that capture the true action semantics beyond what the fixed generic template provides.
+MGTA injects temporal-dynamics modeling into the frozen image encoder and concentrates video modeling on discriminative regions, producing a video feature $v$ that captures how an action unfolds over time.
+BFEM bidirectionally enhances $v$ and $Q$ with each other before the final cosine classifier, so that each modality benefits from the other's discriminative information before classification.
+The three modules are complementary by construction: they act on the text anchors, the video queries, and the decision metric respectively, and each is zero-initialized or identity-start so that the network coincides with the plain baseline at initialization and the CLIP backbone is never modified.
+All three run in a single forward pass of the frozen backbone without iterative refinement.
+
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \begin{tabular}{ll}
+    \hline
+    Symbol & Meaning \\
+    \hline
+    $T$, $N$, $d$ & \#frames, \#patches, embedding dim. \\
+    $F \in \mathbb{R}^{T \times N \times d}$ & spatial-temporal patch tokens \\
+    $Q \in \mathbb{R}^{C \times d}$ & text prototypes of $C$ classes \\
+    $v$, $\hat{v}$ & video feature and BFEM-enhanced feature \\
+    $\mathcal{S}$ & selected discriminative region \\
+    $g_t$, $g_v$ & zero-initialized enhancement gates in BFEM \\
+    $F^{\text{fix}}$, $q^{\text{learn}}$ & fixed-branch and learnable-branch text features \\
+    $\lambda_{e}, \lambda_{m}, \lambda_{a}$ & Text-MSTFF view fusion weights \\
+    \hline
+  \end{tabular}
+  \caption{Notation used in the method.}
+  \label{tab:notation}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  \fbox{\rule{0pt}{2.2in} \rule{0.9\linewidth}{0pt}}
+  \caption{Overview of MATE-CLIP.
+  The frozen CLIP backbone is shared by the text and video encoders.
+  On the text side, a static semantic branch (frozen semantic bank) is combined with a learnable branch enhanced by AMTF (multi-strategy text fusion over the \texttt{[EOT]}, masked-mean, and masked-attention views), and the two branches are fused adaptively into action-biased prototypes.
+  On the video side, MGTA selects discriminative spatial-temporal regions and performs dual-branch temporal modeling (dense Conv3d + sparse asynchronous attention); a lightweight frame-aggregation mixer (Mixer) then applies a depthwise temporal convolution to the frame features before the temporal mean.
+  Finally, BFEM bidirectionally enhances the video feature and the text prototypes with each other under zero-initialized gates.
+  The CLIP backbone remains frozen throughout.}
+  \label{fig:overview}
+\end{figure}
+
+\subsection{AMTF: Adaptive Multi-Strategy Text Fusion}
+\label{sec:amtf}
+The text side of MATE-CLIP combines a \emph{static semantic branch} with a \emph{learnable branch} refined by the \textbf{AMTF} module.
+As discussed in Section~\ref{sec:intro}, a fixed generic template such as ``a video of a person \{\emph{action} class\}'' cannot describe \emph{how} an action is performed, so actions that differ mainly in motion or pose collapse onto nearly identical text directions.
+The static branch preserves this frozen CLIP semantic as a stable anchor, while the learnable branch with AMTF goes beyond the generic template to capture action-specific semantics; the two are fused adaptively at the branch level.
+
+\subsubsection{Static semantic branch}
+For each class $i$, the fixed template ``a video of a person $c_i$'' is encoded by the \emph{frozen} CLIP text encoder, computed once, and cached as a buffer that is never trained.
+This yields a fixed text feature $F^{\text{fix}}_i \in \mathbb{R}^{d}$, L2-normalized, that acts as a \emph{static semantic bank} anchoring the final prototype to the original CLIP semantics.
+
+\subsubsection{Learnable branch with AMTF}
+The learnable branch prepends a set of learnable context vectors (Text-Prompt-Learner) to the class tokens, encodes them with the same frozen encoder, and refines the sequence with the \textbf{AMTF} module (\emph{Adaptive Multi-Strategy Text Fusion}, corresponding to the \texttt{Text\_MSTFF} block).
+AMTF aggregates the token sequence $T = [t_1, \dots, t_L]$ with three complementary views, each capturing a distinct role: the \emph{EOT view} $q_{\text{eot}} = t_L$ preserves the original CLIP semantic and guarantees that the frozen semantic information is never lost; the \emph{masked-mean view}
+\begin{equation}
+  q_{\text{mean}} = \frac{1}{\sum_l m_l} \sum_{l=1}^{L} m_l \, t_l,
+  \label{eq:amtf-mean}
+\end{equation}
+summarizes the overall context of the whole sequence, with padding tokens excluded by the mask $m_l \in \{0,1\}$; and the \emph{masked-attention view}
+\begin{equation}
+  q_{\text{attn}} = \sum_{l=1}^{L} \alpha_l \, t_l, \qquad
+  \alpha = \mathrm{softmax}\!\left( \psi(T) + (1 - \mathbf{m}) \cdot (-\infty) \right),
+  \label{eq:amtf-attn}
+\end{equation}
+re-weights the tokens by a learned importance estimator $\psi$ (a small MLP), amplifying the tokens most relevant to the task.
+Each view is produced by its own linear projection, and the three views are combined by \emph{dynamic weighting} with learnable fusion weights:
+\begin{equation}
+  q^{\text{amtf}} = \lambda_{\text{eot}} q_{\text{eot}} + \lambda_{\text{mean}} q_{\text{mean}} + \lambda_{\text{attn}} q_{\text{attn}},
+  \label{eq:amtf-fuse}
+\end{equation}
+where $\lambda$ is a softmax over learnable logits, initialized to the prior $1 : 0.5 : 0.5$ and bounded by per-view soft caps, so that the model adaptively balances the reliable frozen semantic (\texttt{[EOT]}), the overall context (masked-mean), and the task-relevant emphasis (masked-attention) without letting any single view dominate.
+The fused view is then combined with the branch's \texttt{[EOT]} feature in a residual way through a zero-initialized gate,
+$q^{\text{learn}}_i = \mathrm{normalize}\!\left( t_L + \tanh(g) ( q^{\text{amtf}} - t_L ) \right)$, so the learnable branch starts from the frozen EOT semantic and opens the enhancement gradually.
+
+\subsubsection{Adaptive two-branch fusion}
+The two branch features are combined by a branch-level adaptive fusion with its own learnable weights:
+\begin{equation}
+  Q_i = \mathrm{normalize}\!\left( w^{\text{fix}}_i F^{\text{fix}}_i + w^{\text{learn}}_i q^{\text{learn}}_i \right),
+  \label{eq:amtf-branch-fuse}
+\end{equation}
+where $(w^{\text{fix}}_i, w^{\text{learn}}_i)$ is the softmax of a pair of logits $(\mathrm{logit}^{\text{fix}}, \mathrm{logit}^{\text{learn}})$ initialized to $(3.0, 0.0)$, i.e.\ approximately $(0.95, 0.05)$ after softmax.
+The prototype therefore starts dominated by the static semantic bank; as training proceeds, the learnable logit rises if the action-biased features help discrimination, adaptively re-balancing the trust between the reliable static anchor and the learned dynamic cues.
+Because both branches are identity-start, the text side is a parameter-efficient, plug-in design that never disturbs the frozen video encoder and can be ablated independently.
+
+\subsection{MGTA: Motion-Guided Temporal Adapter}
+\label{sec:sata}
+MGTA models the video side.
+The frozen CLIP image encoder is frame-wise and static: it encodes each frame independently and has no cross-frame receptive field, so the onset, acceleration, direction change, and pose transition of an action are invisible to the backbone.
+MGTA therefore injects temporal-dynamics modeling into the frozen encoder while concentrating computation on the regions that actually move.
+The key observation is that an action is \emph{localized and moving}: at any moment only a small part of the frame is action-critical (a hand, a club, a limb), and that part \emph{changes position across frames}.
+A temporal module should therefore (i) \emph{select} the discriminative regions rather than process the whole frame uniformly, (ii) \emph{track} how those regions move over time, and (iii) do so in a way that leaves the frozen encoder untouched. MGTA realizes this with three components: \emph{discriminative region selection} driven by a motion-aware score, \emph{dual-branch temporal modeling} in which a dense Conv3d branch and a sparse asynchronous-attention branch complement each other, and \emph{identity-preserving injection} so the module coincides with the baseline at initialization.
+
+\subsubsection{Discriminative region selection}
+Given the spatial-temporal patch tokens $F \in \mathbb{R}^{T \times N \times d}$ ($T$ frames, $N$ patches per frame), we score each patch by a normalized combination of three complementary cues:
+\begin{equation}
+  s_{t,n} = \mathcal{Z}\!\left(
+    \alpha \, \hat{A}_{t,n} + (1 - \alpha) \, \hat{M}_{t,n} + \hat{\gamma}_{t,n} \right),
+  \label{eq:sata-score}
+\end{equation}
+where $\hat{A}_{t,n} = \mathcal{Z}(\mathrm{Attn}(z^{\text{cls}}, f_{t,n}))$ is the \emph{class-token attention}, $\hat{M}_{t,n} = \mathcal{Z}(\lVert f_{t,n} - f_{t-1,n} \rVert)$ is the \emph{motion intensity}, $\hat{\gamma}_{t,n} = \mathcal{Z}(\gamma_{t,n})$ is a learnable saliency score, and $\mathcal{Z}$ denotes z-score normalization applied to each cue \emph{before} combination.
+Each cue captures a distinct notion of ``what matters'' for an action: class-token attention locates the patches that matter for the current class under the frozen representation; the motion-intensity term $\lVert f_{t,n} - f_{t-1,n} \rVert$ measures \emph{where and how fast things change across frames}, which is precisely the temporal dynamics that a frame-wise image encoder cannot perceive; and the learnable saliency adapts the selection to the task at hand. Independent z-score normalization makes the three heterogeneous cues comparable in scale and prevents any single cue from dominating the score.
+The top-$k$ patches with the highest scores are selected per frame as the discriminative region $\mathcal{S}$, intersected with a significance threshold so that a quiet frame cannot force a meaningless selection. Because the selection is recomputed \emph{independently at each frame}, a moving part is re-located at its new spatial position in every frame rather than dropped after its first appearance; this frame-wise re-selection is what lets the module keep up with the motion of an action over time.
+
+\subsubsection{Dual-branch temporal modeling: dense locality and motion correspondence}
+Selection identifies \emph{where} the action is, but the frozen encoder still has no way to read \emph{how} those regions move. MGTA models the selected region with a dual-branch design whose costs are asymmetric by construction: a cheap \emph{full-coverage} branch that guarantees dense local temporal modeling everywhere, and a \emph{sparse} branch that explicitly predicts and exploits the motion of the action-critical tokens. The two branches answer complementary questions: ``what changed locally?'' and ``where did it move to?''---and are fused at the patch level.
+The full-coverage branch is a depthwise Conv3d layer that slides over the \emph{entire} spatial-temporal grid and captures dense local spatial-temporal patterns everywhere, providing a reliable lower bound on temporal modeling even for regions that the selection misses; because it is depthwise with a small kernel and shared weights, its cost stays linear in $T N$ and independent of the selection.
+The sparse branch is the \emph{Asynchronous Self-Attention} (ASA), which is applied \emph{only to the selected top-$k$ tokens} of each frame. Its core idea is an \emph{implicit motion-correspondence}: rather than attending to a fixed neighborhood, each selected token predicts where the part it represents has moved to in the following frames, and then reads the features at that predicted location. Concretely, for each selected query $q$ at its original position, a small offset network predicts a per-token 3D offset along the time, height, and width axes of the actual spatial grid,
+\begin{equation}
+  \Delta_{t,n} = (\Delta_t, \Delta_h, \Delta_w) = \mathrm{offset\_net}(q_{t,n}),
+  \label{eq:sata-offset}
+\end{equation}
+whose last layer is zero-initialized, so the offsets are zero at initialization and ASA starts from attention over the query's own local window. Because the offset is predicted from the query's \emph{own} features, it encodes a \emph{local} correspondence---``this part moves from here to there''---rather than a global uniform shift, which is what distinguishes it from shift-based temporal models~\cite{lin2019tsm}.
+Keys and values are then sampled from a $w \times w$ window ($w=5$, i.e.\ $S=25$ candidates) centered at the shifted position $(t + \Delta_t, h + \Delta_h, w + \Delta_w)$ using soft bilinear sampling along all three axes, which keeps the offsets fully differentiable:
+\begin{equation}
+  \mathrm{ASA}(q) = \mathrm{softmax}\!\left(\frac{q \, K_{\text{samp}}^\top}{\sqrt{d}}\right) V_{\text{samp}},
+  \label{eq:sata-asa}
+\end{equation}
+where $K_{\text{samp}}, V_{\text{samp}}$ are gathered at the offset-sampled candidate positions.
+The attention matrix is computed against \emph{all} $S$ sampled cross-frame candidates, so the query genuinely weighs how its motion-aligned neighborhood changes over time.
+This implicit motion-correspondence is what injects the dynamics that a frame-wise encoder misses: a query can \emph{track a moving part to its new location in later frames} and read the feature that encodes how the part's pose or trajectory changed, effectively letting the sparse module act as a lightweight, learnable motion model. In contrast to full space-time attention that aggregates $T N$ tokens per query, ASA attends to only $S$ sampled candidates per selected query, so it concentrates the expensive cross-frame interaction on the action-critical regions that actually move.
+
+\subsubsection{Identity-preserving fusion and injection}
+The two branches answer different questions and should be combined adaptively. An \emph{entry seed boost} first emphasizes the selected regions once on the raw tokens, so that the discriminative signal is highlighted before either branch runs. A patch-level gate, predicted from the temporal-mean statistics of both branch outputs and zero-initialized so that it outputs $\sigma = 0.5$ at initialization, lets the model allocate per patch between the dense local modeling and the motion-correspondence branch:
+\begin{equation}
+  \delta_{t,n} = \sigma_{t,n} \, \mathrm{Conv3d}(f) + (1 - \sigma_{t,n}) \, \mathrm{ASA}(f),
+  \label{eq:sata-fuse}
+\end{equation}
+After fusion, the residual is written back to \emph{every} patch position: the Conv3d branch modeled the whole grid, so unselected positions still receive the dense local temporal update, while the selected positions additionally get a confidence-proportional \emph{soft-enhancement} so that action-critical parts are amplified without suppressing the background. Each frame's class token is then updated by a soft-weighted aggregation of the patch deltas, which provides a gradient bridge so that the discriminative signal reaches the class token that the downstream layers read.
+The entire module is \emph{identity-preserving}: the offset network, the gate, and the enhancement scale are all zero-initialized, so at initialization the ASA reduces to local attention, the two branches are equally weighted, and the network coincides exactly with the plain frozen-CLIP baseline. This is what allows MGTA to be plugged into a frozen encoder without any re-training of the backbone, and it lets the module be ablated independently. By keeping the dense branch full-coverage but cheap, and concentrating the expensive motion-correspondence attention on the selected top-$k$ regions, MGTA both reduces redundancy and sharpens the discriminative signal, injecting temporal dynamics on top of a frozen encoder without modifying the CLIP backbone.
+Before the temporal mean, a lightweight frame-aggregation mixer applies a depthwise temporal convolution to the per-frame features; it is identity-start and adds negligible parameters, and its contribution is reported in the ablations.
+
+\subsection{BFEM: Bidirectional Feature Enhancement Module}
+\label{sec:bgsa}
+BFEM enhances each modality with the other before classification.
+Because the text directions and the video class centers are induced by distinct modalities, supervision signals, and temporal aggregations, a video feature and its text prototype often disagree on the discriminative direction, so using one to refine the other can sharpen the representation for classification.
+BFEM therefore performs two directional \emph{feature enhancement} operations under bounded, zero-initialized gates: the video feature is used to enhance the text direction, and the text prototype is used to enhance the video feature, so that the model starts from an identity mapping and gradually opens the gates during training.
+This warm-up avoids disturbing the already-converged adapters in the early stage, while still allowing a large correction once training stabilizes.
+The key property of the module is that every enhanced feature is a \emph{convex combination} of the original feature and a modal counterpart: it stays on the segment between the two and can never be dragged outside the shared embedding ball, so the frozen representation remains the dominant signal.
+
+\subsubsection{Classification-driven soft enhancement}
+Given the L2-normalized video feature $v \in \mathbb{R}^{d}$ and text prototypes $Q \in \mathbb{R}^{C \times d}$ (each column a class direction), BFEM first computes a soft class assignment
+\begin{equation}
+  p = \mathrm{softmax}\!\left( s \, v Q^\top \right), \qquad \hat{p} = \mathrm{stopgrad}(p),
+  \label{eq:bgsa-p}
+\end{equation}
+where $s$ is a dedicated temperature ($s = 10$) rather than the shared CLIP logit-scale (~100), which would saturate the softmax into one-hot and starve the enhancement path of gradients.
+The soft weights $\hat{p}$ are detached so that the loop $v \rightarrow p \rightarrow \hat{Q}, \hat{v} \rightarrow v$ is broken and the video's gradients come only from the structural enhancement terms, which stabilizes training.
+The probability $\hat{p}$ drives \emph{both} directions below.
+
+\subsubsection{Video-to-text enhancement (V$\rightarrow$T)}
+Each text direction is enhanced with the current video by an amount proportional to how likely the model considers that class:
+\begin{equation}
+  \hat{Q}_b = \mathrm{normalize}\!\left( Q + g_t \, \hat{p}_b \, (v_b - Q) \right),
+  \label{eq:bgsa-vt}
+\end{equation}
+for every class $c$ (index dropped), where $g_t$ is a zero-initialized scalar gate bounded by $\lvert g_t \rvert \le 0.5$ via $\tanh$.
+Because row $c$ rewrites as $(1 - g_t \hat{p}_{b,c}) Q_c + g_t \hat{p}_{b,c} v_b$, the enhanced text is a convex combination of its original direction and the video; classes the model judges unlikely ($\hat{p}_{b,c} \approx 0$) keep their text unchanged, so the enhancement is confidence-conditioned rather than a uniform shift.
+
+\subsubsection{Text-to-video enhancement (T$\rightarrow$V)}
+The video feature is enhanced with the text centroid $\hat{p} Q$ predicted by the model:
+\begin{equation}
+  \hat{v}_b = \mathrm{normalize}\!\left( v_b + g_v \, ( \hat{p}_b Q - v_b ) \right),
+  \label{eq:bgsa-tv}
+\end{equation}
+where $g_v$ is a \emph{dynamic} gate driven by the class assignment itself, $g_v = \mathrm{max\_gate} \cdot \tanh\!\big( \mathrm{MLP}(\hat{p}_b) \big)$ with a zero-initialized output layer, so it starts at zero and stays bounded.
+Equation~\eqref{eq:bgsa-tv} enhances $v$ with the semantics of its predicted class, sharpening its discriminative direction without leaving the segment $[v, \hat{p} Q]$.
+Each direction optionally passes through a residual transform MLP ($D \rightarrow \text{bottleneck} \rightarrow D$, output layer zero-initialized) that is identity at start, giving the module extra expressiveness once the gates wake up.
+
+\subsubsection{Training objective}
+The classification logit is computed as $s' \cos(\hat{v}_b, \hat{Q}_b)$ with the shared logit-scale $s' = \exp(\mathrm{logit\_scale})$, and trained with a cross-entropy loss with label smoothing.
+Unlike attention-based reconstruction or projection schemes, BFEM needs \emph{no auxiliary alignment loss and no prototypes}: the two enhancements are trained end-to-end by the classification objective alone, and the identity-start gates keep the first steps exactly equal to the frozen baseline.
+The only training-time scheduling is a gate warm-up that linearly ramps $g_t, g_v$ from $0$ over the first warm-up steps; at evaluation the gates are used at full strength.
+
+\subsection{Training details}
+\label{sec:training}
+The CLIP backbone is frozen. Only AMTF, MGTA, BFEM, the learnable branch's prompts, and the adapters are trainable.
+All three modules start from identity (zero-initialized gates and zero-initialized offsets), so the network behaves like the plain baseline at initialization.
+We train end-to-end with the cross-entropy objective and adopt the same optimization schedule as Vita-CLIP~\cite{wasim2023vitaclip}.
+Algorithm~\ref{alg:sea} summarizes the overall training procedure.
+At each iteration, the frozen encoders map the sampled clip and the class prompts into tokens. AMTF builds the text prototypes, MGTA produces the video feature, and BFEM applies the bidirectional enhancement before the cosine classifier computes the logits; no auxiliary alignment loss is needed.
+Because every module is identity-start, the first gradient step is taken from the converged baseline configuration, which stabilizes training of the gates and the offset network.
+
+\begin{algorithm}[t]
+\caption{MATE-CLIP training procedure}
+\label{alg:sea}
+\begin{algorithmic}[1]
+\Require frozen CLIP encoders, trainable $\Theta = \{$AMTF, MGTA, BFEM, prompts, adapter$\}$
+\Ensure trained parameters $\Theta$
+\State initialize all gates to zero, offsets to zero
+\For{epoch $= 1, \dots, E$}
+  \For{each mini-batch of clips and labels}
+    \State $F \gets$ frozen image encoder (sampled $T$ frames)
+    \State $Q \gets$ AMTF(frozen text encoder outputs) \Comment{Sec.~\ref{sec:amtf}}
+    \State $\mathcal{S} \gets$ discriminative region selection on $F$ \Comment{Eq.~\ref{eq:sata-score}}
+    \State $v \gets$ MGTA dual-branch temporal modeling on $\mathcal{S}$
+    \State $\hat{p} \gets$ stopgrad soft class assignment \Comment{Eq.~\ref{eq:bgsa-p}}
+    \State $\hat{v}, \hat{Q} \gets$ BFEM bidirectional enhancement \Comment{Eqs.~\ref{eq:bgsa-vt},\ref{eq:bgsa-tv}}
+    \State compute $\mathcal{L} = \mathcal{L}_{\text{CE}}$
+    \State update $\Theta$ by gradient descent
+  \EndFor
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Computational cost}
+\label{sec:cost}
+All three modules are lightweight and operate on the frozen CLIP features: AMTF and BFEM only add small linear layers, gates, and fusion operations, whose cost is negligible relative to the backbone.
+The dominant additional cost comes from MGTA, which we analyze next.
+A full space-time self-attention over all $T N$ tokens costs $O(T^2 N^2)$. MGTA instead keeps the dense branch cheap and makes only the attention sparse: it selects the top-$k$ patches by score ($O(T N)$ scoring plus a top-$k$ selection) and applies ASA to the selected tokens only, so the attention cost reduces to $O(k S)$ per frame with $k \ll T N$ and $S \ll T N$, while the depthwise Conv3d branch covers the full grid at $O(T N)$ with a small constant.
+The offset network is a tiny MLP shared across tokens, adding only $O(T N)$ parameters.
+Consequently, MGTA injects temporal-dynamics modeling at a fraction of the cost of full space-time attention, while the frozen backbone ensures the total trainable parameters remain small.
+
+Table~\ref{tab:complexity} compares the asymptotic cost of the main video-modeling choices.
+With $T=8$ frames and $N=196$ patches per frame (ViT-B/16 at $224^2$), a full space-time attention touches $1{,}568$ tokens per query and costs $\sim$$2.5 \times 10^6$ attention FLOPs per query, whereas MGTA restricts the ASA to the top-$k=12$ patches per frame with $S=25$ sampled candidates per query, reducing the attention cost per query by more than an order of magnitude.
+The selection itself is $O(T N)$ and is shared across all queries, and the depthwise Conv3d branch covers the full grid at a linear $O(T N)$ cost independent of the selection, so the total additional cost scales with the sparse attention term $O(k S)$ plus a small linear term, rather than with the quadratic $O(T^2 N^2)$ of full space-time attention.
+AMTF and BFEM add a few linear projections and fusion/enhancement operations whose cost is negligible compared with the backbone, and the total number of trainable parameters added by MATE-CLIP remains a small fraction of the frozen CLIP ViT-B/16 backbone, as we report in the experiments.
+
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \begin{tabular}{lcc}
+    \hline
+    Method & Attention FLOPs & Param. \\
+    \hline
+    Full space-time attention & $O(T^2 N^2)$ & high \\
+    Uniform token aggregation & $O(T N)$ & low \\
+    MGTA (ours) & $O(T N + k S)$ & low \\
+    \hline
+  \end{tabular}
+  \caption{Asymptotic cost of video-modeling strategies. $k \ll T N$ denotes selected patches.}
+  \label{tab:complexity}
+\end{table}

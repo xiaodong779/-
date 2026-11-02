@@ -1,0 +1,9 @@
+\begin{abstract}
+Adapting a frozen CLIP to video action recognition is limited by fixed generic text templates that fail to capture the true action semantics, a frame-wise image encoder that cannot perceive how an action evolves, and a systematic misalignment between text and video features.
+We propose \textbf{MATE-CLIP} (\emph{Multimodal Adaptation and Temporal Enhancement CLIP}), a parameter-efficient framework that adapts and enhances both modalities and their interaction on a frozen backbone.
+On the text side, a static semantic branch is paired with a learnable branch refined by \emph{AMTF}, a multi-strategy text-fusion module that yields action-biased prototypes.
+On the video side, \emph{MGTA} selects action-critical regions and models them with a dual-branch design that combines dense local temporal modeling with sparse motion-correspondence attention.
+A lightweight \emph{BFEM} then enhances each modality with the other under zero-initialized gates.
+All modules are identity-start, so the network coincides with the frozen baseline at initialization while adding few parameters.
+On UCF101 and HMDB-51, MATE-CLIP outperforms strong CLIP-based baselines, generalizes across the two datasets, and its modules contribute complementary gains.
+\end{abstract}

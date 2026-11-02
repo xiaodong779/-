@@ -1,0 +1,84 @@
+\section{Related Work}
+\label{sec:related}
+
+\textbf{Video modeling.}
+Early approaches adapt image architectures to video by fusing frames at the
+input or inflating convolutions to 3D \cite{tsm2018,carreira2017slowfast}.
+Video transformers later replaced fixed kernels with self-attention, spanning
+divided space-time attention in TimeSformer \cite{bertasius2021timesformer},
+pooled multiscale attention in MViTv2 \cite{li2022mvitv2}, unified
+convolution--attention designs in UniFormer \cite{li2022uniformer},
+spatio-temporal focal modulation in Video-FocalNets \cite{videofocalnets2023},
+and hierarchical windowed attention in Video Swin \cite{liu2022videoswin}.
+On the training side, masked reconstruction \cite{tong2022videomae},
+BERT-style video pretraining \cite{wang2022bevt}, and object-centric
+attention \cite{orvit2022} enrich the learned representations, and general
+video foundation models \cite{wang2024internvideo} scale this further. These
+models are powerful but compute
+features at every position of every frame, which is wasteful when only a
+small region moves, as in fine-grained action. Deformable approaches instead
+learn where to sample: the Deformable Video Transformer \cite{dvt2022}
+dynamically predicts a small subset of video patches to attend, achieving
+efficient temporal aggregation. Our MoDeA branch follows this direction but
+predicts a dense 3D offset field and performs continuous trilinear sampling,
+capturing sub-window motion that patch-level selection cannot represent.
+
+\textbf{Adapters and parameter-efficient video models.}
+Video adapters insert lightweight modules into a frozen encoder to adapt it
+to a downstream task. ST-Adapter \cite{pan2022stadapter} pioneered this
+direction for video, inserting space--time adapters between the blocks of a
+frozen image backbone and showing that a small trainable footprint suffices
+for recognition. This idea underlies EVL \cite{lin2022evl}, which
+attaches temporal adapters to a fully frozen CLIP encoder, and AIM
+\cite{yang2023aim}, which adapts an image backbone to video with
+spatial--temporal modules and reaches competitive accuracy at a small
+training cost. These designs keep the pretrained weights frozen and add a
+small trainable footprint, which is valuable when fine-grained training data
+is limited. We follow the same adapter-style residual design and extend it in
+two respects: a dual-granularity temporal module that pairs local deformable
+motion tracking with a long-term memory of the temporal response, and a
+guidance branch that composes the frozen prior with a separate trainable
+video backbone.
+
+\textbf{State-space models and long-term temporal memory.}
+Mamba \cite{dao2023mamba} models long sequences with a learned recurrent
+state at linear cost, and video variants extend it along the temporal axis:
+VideoMamba \cite{li2024videomamba} scans spatio-temporal tokens for efficient
+video understanding, and a concurrent VideoMamba \cite{videomamba2024}
+introduces a
+bidirectional spatio-temporal selective scan. Our TSA branch shares the same
+long-term memory intuition, carrying a state across the sequence to model the
+overall response of an action, but instantiates it in a lightweight,
+channel-wise form: a bidirectional linear recurrence with a per-channel decay,
+used to produce a temporal channel gate rather than to replace the whole
+architecture. This gives the model a cheap way to remember how each channel
+responds over the whole action, complementing the local motion tracking of
+MoDeA.
+
+\textbf{Frozen vision-language priors.}
+Contrastive image--text models such as CLIP \cite{radford2021clip} acquire
+strong knowledge of where humans and action-relevant content appear, learned
+from massive pre-training data. ViFi-CLIP \cite{rasheed2023vificlip} shows
+that fine-tuning CLIP on videos transfers this knowledge effectively when
+downstream data is scarce, while EVL \cite{lin2022evl} demonstrates the
+frozen-encoder route. We follow the frozen route, since a frozen expert
+guarantees positional judgments that never drift with the downstream task,
+and we differ in how the prior is used: rather than absorbing the prior into
+the encoder, we route it through a guidance branch that learns where and how
+much to inject. The bilateral cross-attention lets the prior and the lower
+branch refine each other, and the adaptive gate controls the amount of
+injection per position, which is better suited to fine-grained tasks where
+indiscriminate fusion can dilute the discriminative signal.
+
+\textbf{Fine-grained action recognition.}
+Fine-grained action recognition targets classes that differ in subtle body
+movement rather than in scene \cite{diving48}. The difficulty
+lies both in localizing the small moving region and in representing the fine
+movement itself. Recent methods learn specialized spatio-temporal experts for
+this task: DSTS \cite{li2022dsts} lets each stage specialize in the
+discriminative spatio-temporal scales of a class, and TDN \cite{wang2021tdn}
+models temporal difference at multiple scales. These methods focus on
+temporal modeling but treat localization as an implicit side effect. Our
+framework separates the two concerns explicitly: the frozen prior handles
+localization through the guidance branch, while the dual-granularity module
+handles representation through deformable motion and state aggregation.

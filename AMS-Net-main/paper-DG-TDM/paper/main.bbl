@@ -1,0 +1,266 @@
+\begin{thebibliography}{37}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Li et~al.(2018)Li, Li, and Vasconcelos]{diving48}
+Yingwei Li, Yi~Li, and Nuno Vasconcelos.
+\newblock Resound: Towards action recognition without representation bias.
+\newblock In \emph{Proceedings of the European Conference on Computer Vision},
+  pages 513--528. Springer, 2018.
+
+\bibitem[Goyal et~al.(2017)Goyal, Kahou, Michalski, Materzynska, Westphal, Kim,
+  Haenel, Fr{\"u}nd, Yianilos, Mueller-Freitag, et~al.]{goyal2017ssv2}
+Raghav Goyal, Samira~Ebrahimi Kahou, Vincent Michalski, Joanna Materzynska,
+  Susanne Westphal, Heuna Kim, Valentin Haenel, Ingo Fr{\"u}nd, Peter Yianilos,
+  Moritz Mueller-Freitag, et~al.
+\newblock The ``something something'' video database for learning and
+  evaluating visual common sense.
+\newblock In \emph{Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 5842--5850, 2017.
+
+\bibitem[Carreira and Zisserman(2017)]{carreira2017slowfast}
+Joao Carreira and Andrew Zisserman.
+\newblock Quo vadis, action recognition? a new model and the kinetics dataset.
+\newblock In \emph{Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 6299--6308, 2017.
+
+\bibitem[Feichtenhofer et~al.(2019)Feichtenhofer, Fan, Malik, and
+  He]{feichtenhofer2019slowfast}
+Christoph Feichtenhofer, Haoqi Fan, Jitendra Malik, and Kaiming He.
+\newblock Slowfast networks for video recognition.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 6202--6211, 2019.
+
+\bibitem[Bertasius et~al.(2021)Bertasius, Wang, and
+  Torresani]{bertasius2021timesformer}
+Gedas Bertasius, Heng Wang, and Lorenzo Torresani.
+\newblock Is space-time attention all you need for video understanding?
+\newblock In \emph{International Conference on Machine Learning}, pages
+  813--824. PMLR, 2021.
+
+\bibitem[Liu et~al.(2022)Liu, Ning, Cao, Wei, Zhang, Lin, and
+  Hu]{liu2022videoswin}
+Ze~Liu, Jia Ning, Yue Cao, Yixuan Wei, Zheng Zhang, Stephen Lin, and Han Hu.
+\newblock Video swin transformer.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 3202--3211, 2022.
+
+\bibitem[Tong et~al.(2022)Tong, Song, Wang, and Wang]{tong2022videomae}
+Zhan Tong, Yibing Song, Jue Wang, and Limin Wang.
+\newblock Videomae: Masked autoencoders are data-efficient learners for
+  self-supervised video pre-training.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~35, pages 10078--10093, 2022.
+
+\bibitem[Wang et~al.(2024{\natexlab{a}})Wang, Chen, Wu, Chen, Dai, Liu, Jiang,
+  Zhou, Shen, Fan, et~al.]{wang2024internvideo}
+Rui Wang, Dongdong Chen, Zuxuan Wu, Yinpeng Chen, Xiyang Dai, Mengtian Liu,
+  Yu-Gang Jiang, Luowei Zhou, Liwei Shen, Enze Fan, et~al.
+\newblock Internvideo: General video foundation models via generative and
+  discriminative learning.
+\newblock In \emph{European Conference on Computer Vision}. Springer,
+  2024{\natexlab{a}}.
+
+\bibitem[Wang and Torresani(2022)]{dvt2022}
+Jue Wang and Lorenzo Torresani.
+\newblock Deformable video transformer.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 5867--5876, 2022.
+
+\bibitem[Radford et~al.(2021)Radford, Kim, Hallacy, Ramesh, Goh, Agarwal,
+  Sastry, Askell, Mishkin, Clark, et~al.]{radford2021clip}
+Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
+  Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark,
+  et~al.
+\newblock Learning transferable visual models from natural language
+  supervision.
+\newblock In \emph{International Conference on Machine Learning}, pages
+  8748--8763. PMLR, 2021.
+
+\bibitem[Lin et~al.(2022)Lin, Geng, Zhang, Gao, de~Melo, Wang, Dai, Qiao, and
+  Li]{lin2022evl}
+Ziyi Lin, Shijie Geng, Renrui Zhang, Peng Gao, Gerard de~Melo, Xiaogang Wang,
+  Jifeng Dai, Yu~Qiao, and Hongsheng Li.
+\newblock Frozen clip models are efficient video learners.
+\newblock In \emph{European Conference on Computer Vision}, pages 388--404.
+  Springer, 2022.
+
+\bibitem[Rasheed et~al.(2023)Rasheed, Khattak, Maaz, Shoukry, Khan, Khan, and
+  Yang]{rasheed2023vificlip}
+Ziyin Rasheed, Muhammad~Uzair Khattak, Muhammad Maaz, Hanoona Shoukry, Salman
+  Khan, Fahad~Shahbaz Khan, and Ming-Hsuan Yang.
+\newblock Fine-tuned clip models are efficient video learners.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 23018--23029, 2023.
+
+\bibitem[Gu and Dao(2023)]{dao2023mamba}
+Albert Gu and Tri Dao.
+\newblock Mamba: Linear-time sequence modeling with selective state spaces.
+\newblock \emph{arXiv preprint arXiv:2312.00752}, 2023.
+
+\bibitem[Park et~al.(2024)Park, Kim, Ko, Kim, and Kim]{videomamba2024}
+Jinyoung Park, Hee-Seon Kim, Kangwook Ko, Minbeom Kim, and Changick Kim.
+\newblock Videomamba: Spatio-temporal selective state space model.
+\newblock In \emph{European Conference on Computer Vision}. Springer, 2024.
+
+\bibitem[Lin et~al.(2018)Lin, Gan, and Han]{tsm2018}
+Ji~Lin, Chuang Gan, and Song Han.
+\newblock Tsm: Temporal shift module for efficient video understanding.
+\newblock In \emph{Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 7083--7093, 2018.
+
+\bibitem[Li et~al.(2022{\natexlab{a}})Li, Wu, Fan, Mangalam, Xiong, Malik, and
+  Feichtenhofer]{li2022mvitv2}
+Yanghao Li, Chao-Yuan Wu, Haoqi Fan, Karttikeya Mangalam, Bo~Xiong, Jitendra
+  Malik, and Christoph Feichtenhofer.
+\newblock Improved multiscale vision transformers for classification and
+  detection.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 1224--1234, 2022{\natexlab{a}}.
+
+\bibitem[Li et~al.(2022{\natexlab{b}})Li, Wang, Peng, Song, Liu, Li, and
+  Qiao]{li2022uniformer}
+Kunchang Li, Yali Wang, Peng Peng, Geng Song, Yihao Liu, Hongsheng Li, and
+  Yu~Qiao.
+\newblock Uniformer: Unified transformer for efficient spatial-temporal
+  representation learning.
+\newblock In \emph{International Conference on Learning Representations},
+  2022{\natexlab{b}}.
+
+\bibitem[Wasim et~al.(2023)Wasim, Khattak, Naseer, Khan, Shah, and
+  Khan]{videofocalnets2023}
+Syed~Talal Wasim, Muhammad~Uzair Khattak, Muzammal Naseer, Salman Khan, Mubarak
+  Shah, and Fahad~Shahbaz Khan.
+\newblock Video-focalnets: Spatio-temporal focal modulation for video action
+  recognition.
+\newblock \emph{arXiv preprint arXiv:2307.06947}, 2023.
+
+\bibitem[Wang et~al.(2022)Wang, Chen, Wu, Chen, Dai, Liu, Jiang, Zhou, and
+  Qiao]{wang2022bevt}
+Rui Wang, Dahu Chen, Zuxuan Wu, Yanpeng Chen, Xiyang Dai, Mengmeng Liu, Yu-Gang
+  Jiang, Liwei Zhou, and Yu~Qiao.
+\newblock Bevt: Bert pretraining of video transformers.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, 2022.
+
+\bibitem[Girdhar et~al.(2022)Girdhar, Ramanan, Gupta, Sivic, and
+  Russell]{orvit2022}
+Rohit Girdhar, Deva Ramanan, Abhinav Gupta, Josef Sivic, and Bryan Russell.
+\newblock Orvit: An object-centric video transformer.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 13361--13371, 2022.
+
+\bibitem[Pan et~al.(2022)Pan, Lin, Zhu, Shao, and Li]{pan2022stadapter}
+Junting Pan, Ziyi Lin, Xiatian Zhu, Jing Shao, and Hongsheng Li.
+\newblock St-adapter: Parameter-efficient image-to-video transfer learning for
+  action recognition.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2022.
+
+\bibitem[Yang et~al.(2023)Yang, Zhu, Xie, Zhang, Chen, and Li]{yang2023aim}
+Taojiannan Yang, Yi~Zhu, Yusheng Xie, Aston Zhang, Chen Chen, and Mu~Li.
+\newblock Aim: Adapting image models for efficient video action recognition.
+\newblock In \emph{International Conference on Learning Representations}, 2023.
+
+\bibitem[Li et~al.(2024)Li, Li, Wang, He, Wang, Wang, and
+  Qiao]{li2024videomamba}
+Kunchang Li, Xinhao Li, Yi~Wang, Yinan He, Yali Wang, Limin Wang, and Yu~Qiao.
+\newblock Videomamba: State space model for efficient video understanding.
+\newblock \emph{arXiv preprint arXiv:2403.06977}, 2024.
+
+\bibitem[Li et~al.(2022{\natexlab{c}})Li, Foo, Ke, Rahmani, Wang, Wang, and
+  Liu]{li2022dsts}
+Tianjiao Li, Lin~Geng Foo, Qiuhong Ke, Hossein Rahmani, Anran Wang, Jinghua
+  Wang, and Jun Liu.
+\newblock Dynamic spatio-temporal specialization learning for fine-grained
+  action recognition.
+\newblock In \emph{European Conference on Computer Vision}, pages 386--403.
+  Springer, 2022{\natexlab{c}}.
+
+\bibitem[Wang et~al.(2021)Wang, Tong, Ji, and Wu]{wang2021tdn}
+Limin Wang, Zhan Tong, Bin Ji, and Gangshan Wu.
+\newblock Tdn: Temporal difference networks for efficient action recognition.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 1895--1904, 2021.
+
+\bibitem[Chen et~al.(2022)Chen, Han, Wang, Sun, and Yang]{chen2022aknet}
+Xu~Chen, Yahong Han, Xiaohan Wang, Yifan Sun, and Yi~Yang.
+\newblock Action keypoint network for efficient video recognition.
+\newblock \emph{arXiv preprint arXiv:2201.06304}, 2022.
+
+\bibitem[Li et~al.(2025{\natexlab{a}})Li, Yang, Wang, Wang, and Fei]{li2025can}
+Xiaoyang Li, Wenzhu Yang, Kanglin Wang, Tiebiao Wang, and Qingsong Fei.
+\newblock Context-aware network based on multi-scale spatio-temporal attention
+  for action recognition in videos.
+\newblock \emph{arXiv preprint arXiv:2512.18750}, 2025{\natexlab{a}}.
+
+\bibitem[Cai et~al.(2025)Cai, Pan, and Yang]{cai2025loki}
+Xuan Cai, Renjie Pan, and Hua Yang.
+\newblock Loki: Low-dimensional kan for efficient fine-tuning image models.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 14869--14880, 2025.
+
+\bibitem[Li et~al.(2025{\natexlab{b}})Li, Yang, and Wang]{li2025manet}
+Xiaoyang Li, Wenzhu Yang, and Kanglin Wang.
+\newblock Manet: Motion-aware network for video action recognition.
+\newblock \emph{Complex \& Intelligent Systems}, 11, 2025{\natexlab{b}}.
+
+\bibitem[Liu et~al.(2021)Liu, Wang, Wu, Qian, and Lu]{liu2021tam}
+Zhaoyang Liu, Limin Wang, Wayne Wu, Chen Qian, and Tong Lu.
+\newblock Tam: Temporal adaptive module for video recognition.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, 2021.
+
+\bibitem[Tu et~al.(2023)Tu, Dai, Wu, Cheng, Hu, and Jiang]{tu2023ila}
+Shuo Tu, Qi~Dai, Zuxuan Wu, Zi-Qiang Cheng, Hao Hu, and Yu-Gang Jiang.
+\newblock Implicit temporal modeling with learnable alignment for video
+  recognition.
+\newblock \emph{arXiv preprint arXiv:2304.10465}, 2023.
+
+\bibitem[Liu et~al.(2023)Liu, Huang, Li, Feng, Wu, and Li]{liu2023stan}
+Rui Liu, Jun Huang, Ge~Li, Jifeng Feng, Xiang Wu, and Tao-Hong Li.
+\newblock Revisiting temporal modeling for clip-based image-to-video knowledge
+  transferring.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 6555--6564, 2023.
+
+\bibitem[Wang et~al.(2024{\natexlab{b}})Wang, Xing, Jiang, Chen, Mei, Zuo, Dai,
+  Wang, and Liu]{wang2024m2clip}
+Mengmeng Wang, Jiazheng Xing, Boyuan Jiang, Jun Chen, Jianbiao Mei, Xingxing
+  Zuo, Guang Dai, Jingdong Wang, and Yong Liu.
+\newblock M2-clip: A multimodal, multi-task adapting framework for video action
+  recognition.
+\newblock \emph{arXiv preprint arXiv:2401.11649}, 2024{\natexlab{b}}.
+
+\bibitem[Zhou et~al.(2024)Zhou, Lu, and Jiang]{zhou2024fease}
+Lu~Zhou, Yuanyao Lu, and Haiyang Jiang.
+\newblock Fease: Feature selection and enhancement networks for action
+  recognition.
+\newblock \emph{Neural Processing Letters}, 56, 2024.
+
+\bibitem[Liu et~al.(2020)Liu, Luo, Wang, Wang, Tai, Wang, Li, Huang, and
+  Lu]{liu2020teinet}
+Zhaoyang Liu, Donghao Luo, Yabiao Wang, Limin Wang, Ying Tai, Chengjie Wang,
+  Jilin Li, Feiyue Huang, and Tong Lu.
+\newblock Teinet: Towards an efficient architecture for video recognition.
+\newblock In \emph{Proceedings of the AAAI Conference on Artificial
+  Intelligence}, 2020.
+
+\bibitem[Luo and Yuille(2019)]{luo2019gst}
+Chenxu Luo and Alan~L. Yuille.
+\newblock Grouped spatial-temporal aggregation for efficient action
+  recognition.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 5512--5521, 2019.
+
+\bibitem[Meng et~al.(2021)Meng, Panda, Lin, Sattigeri, Karlinsky, Saenko,
+  Oliva, and Feris]{meng2021adafuse}
+Yue Meng, Rameswar Panda, Chung-Ching Lin, Prasanna Sattigeri, Leonid
+  Karlinsky, Kate Saenko, Aude Oliva, and Rogerio Feris.
+\newblock Adafuse: Adaptive temporal fusion network for efficient action
+  recognition.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\end{thebibliography}

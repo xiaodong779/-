@@ -1,44 +1,51 @@
-# --- Python 产物 ---
+# ================= 数据集（按用户要求不上传） =================
+Diving48_rawframes/
+Diving48_rgb/
+Diving48_heatmaps_1ch_112/
+UCF101/
+AMS-Net-main/data/
+AMS-Net-main/tools/data/
+
+# ================= 运行环境 / 权重 / 训练输出 =================
+envs/
+weights/
+outputs/
+AMS-Net-main/work_dirs/
+pretrained/
+
+# ================= 工具/技能包中的大体积 PDF 参考文献 =================
+CCFA-Skills/CCFA-Skills-main/ccf-paper-writer/references/
+CCFA-Skills/CCFA-Skills-main/ccf-paper-writer/paper_ref/
+
+# ================= 日志 / 模型结果文件 =================
+*.log
+*.pkl
+*.pth
+*.pt
+*.ckpt
+*.npz
+*.npy
+*.out
+
+# ================= Python 产物 =================
 __pycache__/
 *.py[cod]
 *$py.class
 *.egg-info/
 build/
-dist/
 
-# --- 权重 / checkpoint / 数据产物 ---
-training/checkpoints/
-outputs/
-*.pth
-*.pt
-*.pkl
-*.ckpt
-*.npz
-*.npy
-
-# --- 日志 ---
-training/logs/
-*.log
-logs/
-
-# --- 训练可视化输出 ---
-training/mask_prompt_vis/
-
-# --- 第三方仓库（体积大，含预训练权重，请另行安装） ---
-third_party/
-
-# --- 数据集（如误放于仓库内） ---
-Diving48*/
-UCF101/
-rawframes/
-rgb/
-
-# --- 其他 ---
-slurm-*
-train_output/
-pretrained/
-.DS_Store
-
-# --- 编辑器/工具内部文件 ---
+# ================= 编辑器/系统内部文件 =================
 .codebuddy/
-*.out
+.Trash-0/
+.DS_Store
+slurm-*
+
+# ================= 根目录杂项（非代码） =================
+/\[6
+/d5b2092f11c8a2b82c9e0b2330006fa9.jpg
+/image.png
+/微信图片_20260827194923_21_4.jpg
+/微信图片_20260827194927_22_4.jpg
+
+# 根目录 training 仅为 checkpoint/日志
+/training/

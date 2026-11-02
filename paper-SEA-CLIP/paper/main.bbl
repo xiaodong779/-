@@ -1,0 +1,214 @@
+\begin{thebibliography}{31}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bertasius et~al.(2021)Bertasius, Wang, and
+  Torresani]{bertasius2021timesformer}
+Gedas Bertasius, Heng Wang, and Lorenzo Torresani.
+\newblock Is space-time attention all you need for video understanding?
+\newblock In \emph{ICML}, 2021.
+
+\bibitem[Cao et~al.(2024)Cao, Tang, Huang, Peng, Zhang, Liu, Chen,
+  et~al.]{cao2024rap}
+Meng Cao, Haoran Tang, Jinfa Huang, Jin Peng, Can Zhang, Ruyang Liu, Long Chen,
+  et~al.
+\newblock Rap: Efficient text-video retrieval with sparse-and-correlated
+  adapter.
+\newblock In \emph{Findings of the Association for Computational Linguistics:
+  ACL}, 2024.
+
+\bibitem[Chen et~al.(2023)Chen, Duan, Wang, He, Lu, Dai, and
+  Qiao]{chen2023vitadapter}
+Zhe Chen, Yuchen Duan, Wenhai Wang, Junjun He, Tong Lu, Jifeng Dai, and Yu
+  Qiao.
+\newblock Vit-adapter: Adapting vision transformers for dense prediction.
+\newblock In \emph{CVPR}, 2023.
+
+\bibitem[Dai et~al.(2017)Dai, Qi, Xiong, Li, Zhang, Hu, and
+  Wei]{dai2017deformable}
+Jifeng Dai, Haozhi Qi, Yuwen Xiong, Yi Li, Guodong Zhang, Han Hu, and Yichen
+  Wei.
+\newblock Deformable convolutional networks.
+\newblock In \emph{ICCV}, 2017.
+
+\bibitem[Fan et~al.(2021)Fan, Xiong, Mangalam, Li, Yan, Malik, and
+  Feichtenhofer]{fan2021multiscale}
+Haoqi Fan, Bo Xiong, Karttikeya Mangalam, Yanghao Li, Zhicheng Yan, Jitendra
+  Malik, and Christoph Feichtenhofer.
+\newblock Multiscale vision transformers.
+\newblock In \emph{ICCV}, 2021.
+
+\bibitem[Feichtenhofer et~al.(2019)Feichtenhofer, Fan, Malik, and
+  He]{feichtenhofer2019slowfast}
+Christoph Feichtenhofer, Haoqi Fan, Jitendra Malik, and Kaiming He.
+\newblock Slowfast networks for video recognition.
+\newblock In \emph{ICCV}, 2019.
+
+\bibitem[Hu et~al.(2022)Hu, Shen, Wallis, Allen-Zhu, Li, Wang, Wang, and
+  Chen]{hu2022lora}
+Edward~J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean
+  Wang, Lu Wang, and Weizhu Chen.
+\newblock Lora: Low-rank adaptation of large language models.
+\newblock In \emph{ICLR}, 2022.
+
+\bibitem[Ju et~al.(2021)Ju, Han, Zheng, Zhang, and Xie]{ju2021clip2video}
+Chen Ju, Tengda Han, Kunhao Zheng, Ya Zhang, and Weidi Xie.
+\newblock Clip2video: Mastering video-text retrieval via image clip.
+\newblock In \emph{ACM MM}, 2021.
+
+\bibitem[Ju et~al.(2024)Ju, Yang, and Ye]{ju2024froster}
+Xiaojun Ju, Quanzeng Yang, and Mang Ye.
+\newblock Froster: Frozen clip is a strong teacher for open-vocabulary action
+  recognition.
+\newblock In \emph{ICLR}, 2024.
+
+\bibitem[Kuehne et~al.(2011)Kuehne, Jhuang, Garrote, Poggio, and
+  Serre]{kuehne2011hmdb}
+Hildegard Kuehne, Huelhan Jhuang, Estibaliz Garrote, Tomaso Poggio, and Thomas
+  Serre.
+\newblock Hmdb: A large video database for human motion recognition.
+\newblock In \emph{ICCV}, 2011.
+
+\bibitem[Li et~al.(2022)Li, Li, Xiong, and Hoi]{li2021blip}
+Junnan Li, Dongxu Li, Caiming Xiong, and Steven Hoi.
+\newblock Blip: Bootstrapping language-image pre-training for unified
+  vision-language understanding and generation.
+\newblock In \emph{ICML}, 2022.
+
+\bibitem[Li et~al.(2023)Li, Li, Savarese, and Hoi]{li2023blip2}
+Junnan Li, Dongxu Li, Silvio Savarese, and Steven Hoi.
+\newblock Blip-2: Bootstrapping language-image pre-training with frozen image
+  encoders and large language models.
+\newblock In \emph{ICML}, 2023.
+
+\bibitem[Li et~al.(2024{\natexlab{a}})Li, Li, Wang, He, Wang, Wang, and
+  Qiao]{li2024video}
+Kunchang Li, Xinhao Li, Yi Wang, Yinan He, Yali Wang, Limin Wang, and Yu Qiao.
+\newblock Video mamba suite: State space model as a versatile alternative for
+  video understanding.
+\newblock In \emph{arXiv preprint arXiv:2403.09626}, 2024{\natexlab{a}}.
+
+\bibitem[Li et~al.(2024{\natexlab{b}})Li, Li, Wang, He, Wang, Wang, and
+  Qiao]{liu2024video_mamba}
+Kunchang Li, Xinhao Li, Yi Wang, Yinan He, Yali Wang, Limin Wang, and Yu Qiao.
+\newblock Videomamba: State space model for efficient video understanding.
+\newblock In \emph{ECCV}, 2024{\natexlab{b}}.
+
+\bibitem[Lin et~al.(2019)Lin, Gan, and Han]{lin2019tsm}
+Ji Lin, Chuang Gan, and Song Han.
+\newblock Tsm: Temporal shift module for efficient video understanding.
+\newblock In \emph{ICCV}, 2019.
+
+\bibitem[Liu et~al.(2022)Liu, Ning, Cao, Wei, Zhang, Lin, and
+  Hu]{liu2022video_swin}
+Ze Liu, Jia Ning, Yue Cao, Yixuan Wei, Zheng Zhang, Stephen Lin, and Han Hu.
+\newblock Video swin transformer.
+\newblock In \emph{CVPR}, 2022.
+
+\bibitem[Ni et~al.(2022)Ni, Peng, Chen, Zhang, Meng, Fu, Xiang, and
+  Ling]{ni2022xclip}
+Bolin Ni, Houwen Peng, Minghao Chen, Songyang Zhang, Gaofeng Meng, Jianlong Fu,
+  Shiming Xiang, and Haibin Ling.
+\newblock Expanding language-image pretrained models for general video
+  recognition.
+\newblock In \emph{ECCV}, 2022.
+
+\bibitem[Pan et~al.(2022)Pan, Lin, Wang, Zheng, Yang, Lei, and
+  Wang]{pan2022st_adapter}
+Junting Pan, Kevin Lin, Chengyi Wang, Samuel Zheng, Ziyang Yang, Ziwei Lei, and
+  Jiuxiang Wang.
+\newblock St-adapter: Parameter-efficient image-to-video transfer learning.
+\newblock In \emph{NeurIPS}, 2022.
+
+\bibitem[Radford et~al.(2021)Radford, Kim, Hallacy, Ramesh, Goh, Agarwal,
+  Sastry, Askell, Mishkin, Clark, et~al.]{radford2021clip}
+Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
+  Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark,
+  et~al.
+\newblock Learning transferable visual models from natural language
+  supervision.
+\newblock In \emph{ICML}, 2021.
+
+\bibitem[Soomro et~al.(2012)Soomro, Zamir, and Shah]{soomro2012ucf101}
+Khurram Soomro, Amir~Roshan Zamir, and Mubarak Shah.
+\newblock Ucf101: A dataset of 101 human actions classes from videos in the
+  wild.
+\newblock In \emph{arXiv preprint arXiv:1212.0402}, 2012.
+
+\bibitem[Tran et~al.(2015)Tran, Bourdev, Fergus, Torresani, and
+  Paluri]{tran2015c3d}
+Du Tran, Lubomir Bourdev, Rob Fergus, Lorenzo Torresani, and Manohar Paluri.
+\newblock Learning spatiotemporal features with 3d convolutional networks.
+\newblock In \emph{ICCV}, 2015.
+
+\bibitem[Tran et~al.(2018)Tran, Wang, Torresani, Ray, LeCun, and
+  Paluri]{tran2018i3d}
+Du Tran, Heng Wang, Lorenzo Torresani, Jamie Ray, Yann LeCun, and Manohar
+  Paluri.
+\newblock A closer look at spatiotemporal convolutions for action recognition.
+\newblock In \emph{CVPR}, 2018.
+
+\bibitem[Wang et~al.(2021)Wang, Xing, and Liu]{wang2022actionclip}
+Mengmeng Wang, Jiazheng Xing, and Yong Liu.
+\newblock Actionclip: A new paradigm for video action recognition.
+\newblock In \emph{arXiv preprint arXiv:2109.08472}, 2021.
+
+\bibitem[Wang et~al.(2024)Wang, Xing, Jiang, Chen, Mei, Zuo, Dai, Wang, and
+  Liu]{wang2024m2clip}
+Mengmeng Wang, Jiazheng Xing, Boyuan Jiang, Jun Chen, Jianbiao Mei, Xingxing
+  Zuo, Guang Dai, Jingdong Wang, and Yong Liu.
+\newblock M2-clip: A multimodal, multi-task adapting framework for video action
+  recognition.
+\newblock In \emph{AAAI}, 2024.
+
+\bibitem[Wang et~al.(2025)Wang, Chen, Xu, Zhang, et~al.]{wang2025vlpa}
+Pengcheng Wang, Zhan Chen, Weijia Xu, Taimin Zhang, et~al.
+\newblock Vlpa-clip: Video language prompting and adapting clip for efficient
+  video action recognition.
+\newblock \emph{Pattern Recognition}, 2025.
+
+\bibitem[Wang et~al.(2023)Wang, Li, Li, He, Huang, Zhao, Zhang, Xu, Liu, Wang,
+  Xing, Guo, Shi, Cao, Wang, Liu, Zhao, Qiao, et~al.]{wang2023internvideo}
+Yi Wang, Kunchang Li, Yinan Li, Yinan He, Bingkun Huang, Zhiyu Zhao, Hongjie
+  Zhang, Jifeng Xu, Yi Liu, Zun Wang, Sen Xing, Guo Guo, Junzhe Shi, Yan Cao,
+  Haoqin Wang, Yanghao Liu, Yali Zhao, Yu Qiao, et~al.
+\newblock Internvideo: General video foundation models via generative and
+  discriminative learning.
+\newblock In \emph{ICLR}, 2023.
+
+\bibitem[Wasim et~al.(2023)Wasim, Naseer, Khan, Khan, and
+  Shah]{wasim2023vitaclip}
+Syed~Talal Wasim, Muzammal Naseer, Salman Khan, Fahad~Shahbaz Khan, and Mubarak
+  Shah.
+\newblock Vita-clip: Video and text adaptive clip via multimodal prompting.
+\newblock In \emph{CVPR}, 2023.
+
+\bibitem[Xue et~al.(2023)Xue, Sun, Liu, Fu, Song, Li, and Luo]{xue2023clipvip}
+Hongwei Xue, Yuchong Sun, Bei Liu, Jianlong Fu, Ruihua Song, Houqiang Li, and
+  Jiebo Luo.
+\newblock Clip-vip: Adapting pre-trained image-text model to video-language
+  representation alignment.
+\newblock In \emph{ICLR}, 2023.
+
+\bibitem[Yang et~al.(2023)Yang, Zhu, Xie, Zhang, Chen, and Li]{yang2023aim}
+Tao Yang, Yi Zhu, Yusheng Xie, Aston Zhang, Chen Chen, and Mu Li.
+\newblock Aim: Adapting image models for efficient video action recognition.
+\newblock In \emph{ICLR}, 2023.
+
+\bibitem[Zhang et~al.(2025)Zhang, Shi, Liu, et~al.]{zhang2025alignclip}
+Jiaming Zhang, Shigeng Shi, Kai Liu, et~al.
+\newblock Alignclip: A strong yet efficient clip via implicit multi-objective
+  optimization.
+\newblock In \emph{ICLR}, 2025.
+
+\bibitem[Zhmoginov et~al.(2025)Zhmoginov, Baevski, Auli,
+  et~al.]{zhm2025siglip2}
+Andrey Zhmoginov, Alexei Baevski, Michael Auli, et~al.
+\newblock Siglip 2: Multilingual vision-language encoders with improved
+  semantic understanding, localization, and dense features.
+\newblock 2025.
+
+\end{thebibliography}

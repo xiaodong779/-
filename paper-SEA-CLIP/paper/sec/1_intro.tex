@@ -1,0 +1,46 @@
+\section{Introduction}
+\label{sec:intro}
+
+Video action recognition seeks to identify human actions in videos.
+Contrastive language-image pre-training (CLIP)~\cite{radford2021clip} has become a strong foundation for video understanding, and a line of work~\cite{wang2022actionclip,ni2022xclip,wasim2023vitaclip,wang2024m2clip} adapts frozen CLIP models to video action recognition with lightweight temporal modeling modules and learnable prompts, achieving strong performance without retraining the large backbone. Recent efforts extend this recipe to open-vocabulary action recognition~\cite{ju2024froster} and to stronger video-text encoders~\cite{wang2023internvideo,zhm2025siglip2}.
+Despite this progress, the frozen CLIP text--video space still suffers from three under-explored semantic gaps that jointly limit recognition accuracy.
+
+\textbf{(i) Fixed generic templates fail to capture the true action semantics.}
+A common recipe encodes each class with a fixed, handcrafted template such as ``a video of a person \{\emph{action} class\}'', which is passed through the frozen CLIP text encoder to obtain a static class representation.
+This template is \emph{generic}: it imposes the same rigid sentence structure on every category and does not adapt to the semantics of the specific action, so it can only express ``which object or activity is present'' rather than \emph{how} the action is performed.
+Actions with similar wording but different motion---e.g., swinging a golf club versus carrying a golf club---are therefore pushed toward nearly identical text directions, because the template never describes the motion, the pose change, or the spatial relation that distinguishes them.
+The resulting text prototype is semantically shallow and static, which weakens inter-class separation whenever classes are described by the same template and share words or scenes.
+
+\textbf{(ii) Video-side temporal-dynamics deficiency and discriminative dilution.}
+The frozen CLIP image encoder is inherently \emph{frame-wise}: it encodes each frame independently and has no cross-frame receptive field, so it cannot perceive how an action evolves over time, and the onset, acceleration, direction change, and pose transition of a motion are all lost.
+Existing temporal adapters either aggregate all spatial-temporal tokens uniformly~\cite{wasim2023vitaclip} or model the full token stream~\cite{li2024video,liu2024video_mamba}, treating static background and action-critical moving regions equally.
+This uniform modeling is wasteful and, more importantly, \emph{dilutes} the temporal dynamics and the discriminative signal of the critical regions: when every patch receives equal weight, the subtle movement of a hand or a body part is averaged away by static scenery.
+
+\textbf{(iii) Cross-modal directional misalignment.}
+Even when both the text and video sides are enriched, the text class directions and the video class centers in the frozen CLIP space are systematically misaligned, because they are induced by distinct modalities, supervision signals, and temporal aggregations.
+Direct cosine classification under this misalignment produces insufficient margins and unstable decisions.
+
+We argue that these three gaps form an \emph{information pipeline}: text prototypes serve as the \emph{anchors}, video features serve as the \emph{queries}, and the final classifier measures their \emph{similarity}.
+Improving any single stage leaves the others untouched.
+For example, a richer text anchor is useless if the video query is diluted by background tokens, and even two well-formed representations fail if the directions they live in are systematically skewed relative to each other.
+Concretely, consider a golf swing. The \texttt{[EOT]}-only text prototype collapses the action description into a single vector, the uniformly pooled video feature averages the fast club motion into the static course scene, and the residual cross-modal shift further reduces the margin between swing variants.
+Each failure is attributable to a distinct stage of the pipeline, so a method that optimizes only one stage inevitably sacrifices recognition accuracy.
+This motivates a unified framework that strengthens all three stages in a complementary way rather than optimizing each module in isolation; it also suggests that the three modules should be \emph{orthogonal} in design, each addressing its own stage, so that their gains add up.
+
+In this paper, we propose \textbf{MATE-CLIP} (\emph{Multimodal Adaptation and Temporal Enhancement CLIP}), a parameter-efficient framework that adapts a frozen CLIP backbone to video action recognition.
+Each of the three pipeline stages is addressed by one lightweight, plug-and-play module trained end-to-end on the \emph{frozen} backbone: text adaptation (AMTF), video temporal modeling (MGTA), and cross-modal alignment (BFEM).
+\begin{itemize}
+    \item \textbf{Adaptive Multi-Strategy Text Fusion} (AMTF) is the text-side module. It aggregates the \texttt{[EOT]}, masked-mean, and masked-attention views with learnable weights, yielding an action-biased and semantically complete prototype. AMTF runs on a learnable branch that is paired with a static semantic branch caching the frozen class semantics, so the final prototype retains the reliable frozen semantics while being biased toward the action.
+    \item \textbf{Motion-Guided Temporal Adapter} (MGTA) enhances the video side. It injects temporal-dynamics modeling into the frozen image encoder, which otherwise has no cross-frame receptive field. MGTA first selects discriminative regions by fusing class-token attention, \emph{motion intensity}, and a learnable saliency score. It then models them with a dual-branch design: a full-coverage Conv3d branch captures dense local temporal patterns, while an \emph{asynchronous self-attention} branch treats motion as an \emph{implicit correspondence}--each selected token predicts a per-token 3D offset to where the represented part has moved and reads features at that predicted location. This sparse motion-tracking cross-frame association captures how an action unfolds while concentrating computation on the action-critical regions.
+    \item \textbf{Bidirectional Feature Enhancement Module} (BFEM) enhances each modality with the other before classification. Driven by a soft class assignment, it uses the video feature to enhance the text directions and uses the text prototypes to enhance the video feature, in both directions under bounded, zero-initialized gates that start from identity and open gradually during training. It therefore enhances without disturbing the already-converged adapters and needs no auxiliary alignment loss.
+\end{itemize}
+
+All three modules are zero-initialized or identity-start, so the frozen CLIP backbone is never modified and each module can be ablated independently.
+
+Our main contributions are summarized as follows:
+\begin{itemize}
+    \item We identify three complementary semantic gaps that jointly limit frozen CLIP video action recognition: fixed generic templates that fail to capture the true action semantics, video-side temporal-dynamics deficiency with discriminative dilution, and cross-modal directional misalignment.
+    \item We propose MATE-CLIP, a parameter-efficient framework for multimodal adaptation and temporal enhancement, with three plug-and-play modules (AMTF, MGTA, BFEM) that go beyond the fixed generic text template to capture action-specific semantics, inject temporal dynamics into the frozen image encoder through motion-guided selection and implicit motion-correspondence attention, and explicitly align the two modalities, all on a frozen CLIP backbone.
+    \item We show that the frozen-CLIP adaptation generalizes across datasets and that the three modules compose orthogonally, via systematic ablations on UCF101 and HMDB-51.
+\end{itemize}
+Experiments on UCF101~\cite{soomro2012ucf101} and HMDB-51~\cite{kuehne2011hmdb} show that MATE-CLIP consistently outperforms strong CLIP-based baselines on both benchmarks and generalizes across the two datasets.

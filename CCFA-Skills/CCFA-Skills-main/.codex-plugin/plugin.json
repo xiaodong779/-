@@ -1,0 +1,38 @@
+{
+  "name": "ccfa-skills",
+  "version": "0.9.0",
+  "description": "A coordinated skill family for CCF research papers.",
+  "author": {
+    "name": "CCFA Skills maintainers"
+  },
+  "homepage": "https://github.com/mikubaka88/CCFA-Skills",
+  "repository": "https://github.com/mikubaka88/CCFA-Skills",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "skills",
+    "research",
+    "ccf",
+    "paper-writing"
+  ],
+  "interface": {
+    "displayName": "CCFA Skills",
+    "shortDescription": "Research skills from idea to submission.",
+    "longDescription": "Seventeen focused skills help researchers develop ideas, gather evidence, design experiments, write and review manuscripts, create scientific figures, and prepare submissions while preserving a coherent research story.",
+    "developerName": "CCFA Skills maintainers",
+    "category": "Productivity",
+    "capabilities": [
+      "skills",
+      "research-workflow",
+      "paper-writing",
+      "publication-visuals",
+      "data-visualization",
+      "scientific-architecture-diagrams",
+      "editable-vector-graphics",
+      "academic-humanization",
+      "experiment-discipline"
+    ],
+    "brandColor": "#1F6F8B",
+    "defaultPrompt": "Choose the CCFA skill that best matches the research task, preserve evidence and terminology, and use Humanization when refining publication prose."
+  }
+}

@@ -1,0 +1,13 @@
+===== Diving48 Val Rawframes Check =====
+Annotation file: /hy-tmp/AMS-Net-main/data/diving48/annotations/diving48_val_rawframes.txt
+Rawframes root:  /hy-tmp/Diving48_rawframes
+
+Total annotation lines: 1970
+Unique video ids:       1970
+Duplicate video ids:    0
+Bad format lines:       0
+Bad labels:             0
+Missing folders:        0
+Frame mismatches:       0
+Num classes:            47
+Label range:            0 to 47

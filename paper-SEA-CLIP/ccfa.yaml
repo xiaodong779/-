@@ -1,0 +1,55 @@
+version: "0.4.5"
+project:
+  title: "MATE-CLIP: Multimodal Adaptation and Temporal Enhancement for Action Recognition"
+  framework_name: "MATE-CLIP"
+  modules:
+    - name: "AMTF"
+      full: "Adaptive Multi-Strategy Text Fusion"
+      code_path: "Vita-CLIP/training/Text_MSTFF.py"
+      design_note: "applied on a learnable branch alongside a static semantic branch"
+    - name: "MGTA"
+      full: "Motion-Guided Temporal Adapter"
+      code_path: "Vita-CLIP/training/VitaCLIP_discriminative_rap.py"
+    - name: "BFEM"
+      full: "Bidirectional Feature Enhancement Module"
+      code_path: "Vita-CLIP/training/BIE.py"
+  source_code: "Vita-CLIP/ (based on Vita-CLIP, CVPR 2023)"
+  base_paper: "Vita-CLIP: Video and text adaptive CLIP via Multiscale Temporal Modeling (CVPR 2023)"
+target_venue:
+  name: "CVPR"
+  policy_status: "CVPR 2026 template initialized; recheck current policy at submission"
+stage: "writing-draft-1"
+artifacts:
+  idea_document: "artifacts/01-idea-document.md"
+  result_tables: "artifacts/02-result-tables.md"
+  training_evidence: "artifacts/03-training-evidence.md"
+  manuscript_tex: "paper/main.tex"
+  manuscript_style: "paper/cvpr.sty"
+  bib: "paper/main.bib"
+claims:
+  - id: C1
+    text: "CLIP text encoding loses compositional semantics because only the [EOT] token is used; multi-strategy aggregation (AMTF) restores them."
+    support: "Text_MSTFF.py design; ablation to be run"
+  - id: C2
+    text: "The frozen CLIP image encoder is frame-wise and has no cross-frame receptive field, so action dynamics (onset, acceleration, pose transition) are lost; uniform full-token modeling further dilutes discriminative regions. The Motion-Guided Temporal Adapter (MGTA) injects motion-dynamics modeling and focuses on discriminative regions."
+    support: "RAP design; UCF101 baseline 93.84 vs RAP-based gains"
+  - id: C3
+    text: "Frozen CLIP text directions and video class centers are systematically misaligned; the Bidirectional Feature Enhancement Module (BFEM) enhances each with the other and enlarges classification margins."
+    support: "CMSI.py design; UCF101 best 94.21 (v3), v4 training in progress"
+  - id: C4
+    text: "MATE-CLIP improves top-1 accuracy on UCF101 over strong CLIP baselines."
+    support: "PENDING: v4 UCF101 result not yet finalized"
+experiments:
+  source: "user's own training (Vita-CLIP repo)"
+  no_new_training: false
+  datasets:
+    - "UCF101 split1"
+    - "HMDB-51 split1"
+  baselines:
+    - "Vita-CLIP / frozen CLIP baseline"
+    - "RAP baseline: UCF101 93.84 (per user report)"
+  current_best: "UCF101 94.21 (v3, per user report)"
+  pending: "v4 training in progress, ETA ~13h at last check; HMDB-51 to be run"
+revision_ledger: "artifacts/04-revision-ledger.md"
+submission_checks:
+  mode: "later; must compile PDF and check anonymity/page limit"

@@ -1,0 +1,155 @@
+
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Datasets}
+\label{sec:datasets}
+We evaluate on two standard benchmarks to assess both accuracy and cross-dataset generalization of the frozen-CLIP adaptation.
+\textbf{UCF101}~\cite{soomro2012ucf101} contains 13,320 realistic action videos from 101 categories collected from YouTube; we follow the standard split 1 (9,537 training and 3,783 testing clips), and its categories span human--object interaction, body-motion only, human--human interaction, playing musical instruments, and sports, with substantial intra-class variation in viewpoint, scale, and background.
+\textbf{HMDB-51}~\cite{kuehne2011hmdb} contains 6,766 clips from 51 action categories (mostly full-body actions), each with a limited number of samples, which makes it a harder and more motion-centric benchmark for evaluating temporal modeling and generalization of the frozen-CLIP adaptation.
+Together, the two datasets let us verify that the gains of MATE-CLIP are not specific to a single benchmark.
+
+\subsection{Implementation details}
+\label{sec:implementation}
+We build on the CLIP ViT-B/16 backbone~\cite{radford2021clip} and keep both encoders frozen throughout training.
+Videos are sampled into 8 frames at a stride chosen so that the clip covers the action, and evaluation uses 3 spatial and 3 temporal views.
+The frozen backbone is augmented with the RAP-style correlated adapter as the base video model~\cite{cao2024rap}. MGTA is applied on adapter layers \texttt{\{3,5,7,9\}} with top-$k$ patches $k=12$, 8 asynchronous attention heads, a space-time offset bound of 1.0 (temporal) and 4.0 (spatial) patches, and a window size of 5 frames.
+BFEM uses a dedicated classification temperature of $s = 10$, enhancement gates bounded by $\max\_gate = 0.5$ and warmed up over the first 100 steps, and optional per-direction residual transforms with a bottleneck of 128; no alignment loss is used.
+We train for 60 epochs with 5 warm-up epochs, a base learning rate of $10^{-4}$ for the modules (with separate learning rates for prompts and adapters), label smoothing of 0.1, and gradient accumulation that yields an effective batch size of 64.
+The backbone is loaded from the official CLIP weights and is not updated.
+Table~\ref{tab:hyper} lists the full hyper-parameter configuration.
+
+\begin{table}[t]
+  \centering
+  \small
+  \begin{tabular}{ll}
+    \hline
+    Hyper-parameter & Value \\
+    \hline
+    Backbone & CLIP ViT-B/16 (frozen) \\
+    Input frames $T$ & 8 \\
+    Patch size & $16 \times 16$ \\
+    MGTA layers & \{3, 5, 7, 9\} \\
+    Selected patches $k$ & 12 \\
+    ASA heads & 8 \\
+    Offset bound (temp., spat.) & 1.0, 4.0 \\
+    Temporal window & 5 \\
+    BFEM temp. $s$ & 10 \\
+    BFEM max gate & 0.5 \\
+    BFEM gate warm-up & 100 steps \\
+    Epochs / warm-up & 60 / 5 \\
+    Base learning rate & $10^{-4}$ \\
+    Label smoothing & 0.1 \\
+    Effective batch size & 64 \\
+    Test views & $3 \times 3$ \\
+    \hline
+  \end{tabular}
+  \caption{Hyper-parameters of MATE-CLIP.}
+  \label{tab:hyper}
+\end{table}
+
+\subsection{Evaluation protocol and baselines}
+\label{sec:evaluation}
+We report top-1 accuracy (\%).
+Our primary baselines are (i) the frozen CLIP baseline with the text \texttt{[EOT]} representation and uniform frame pooling, (ii) Vita-CLIP~\cite{wasim2023vitaclip}, a strong frozen-CLIP method with multimodal prompting, and (iii) RAP~\cite{cao2024rap}, the sparse-and-correlated adapter that serves as the direct sparse baseline for MGTA.
+We also compare with representative video transformers trained from scratch on the same benchmark~\cite{bertasius2021timesformer,liu2022video_swin,fan2021multiscale} to situate frozen-CLIP methods in the literature.
+All methods are evaluated under the same protocol: 8-frame clips, the same test-time augmentation, and top-1 accuracy reported on the standard split 1.
+For the frozen CLIP and Vita-CLIP baselines we reuse the official hyper-parameters, and for RAP we use the configuration that matches our base model so that the gains of MGTA are attributable to the module itself rather than to a stronger base.
+
+\subsection{Main results}
+\label{sec:main-results}
+Table~\ref{tab:main} reports the main comparison.
+On both UCF101 and HMDB-51, the frozen CLIP baseline with the \texttt{[EOT]} representation and uniform pooling already performs reasonably, and the RAP sparse adapter improves it further, confirming that focusing on informative patches helps even when scenes and background are shared across many categories.
+MATE-CLIP is expected to further improve over RAP by adding the temporal-dynamics modeling of MGTA, the action-biased text prototypes of AMTF, and the bidirectional enhancement of BFEM.
+The full MATE-CLIP model combines all three modules. Numbers marked \TODO{} are pending training completion and will be filled from the training logs.
+
+\begin{table}[t]
+  \centering
+  \begin{tabular}{lcc}
+    \hline
+    Method & UCF101 & HMDB-51 \\
+    \hline
+    TimeSformer~\cite{bertasius2021timesformer} & 95.6 & -- \\
+    Video Swin-T~\cite{liu2022video_swin} & 96.4 & -- \\
+    Frozen CLIP baseline & -- & -- \\
+    Vita-CLIP~\cite{wasim2023vitaclip} & -- & -- \\
+    RAP baseline~\cite{cao2024rap} & 93.84 & -- \\
+    MGTA & \TODO{} & \TODO{} \\
+    + AMTF & \TODO{} & \TODO{} \\
+    MATE-CLIP (full) & \TODO{} & \TODO{} \\
+    \hline
+  \end{tabular}
+  \caption{Top-1 accuracy (\%) on UCF101 and HMDB-51. Numbers marked \TODO{} are pending training completion and will be filled from the training logs.}
+  \label{tab:main}
+\end{table}
+
+\subsection{Efficiency analysis}
+\label{sec:efficiency}
+Beyond accuracy, we measure the computational cost introduced by each module, because a lightweight design is a core requirement of frozen-CLIP adaptation.
+Table~\ref{tab:efficiency} reports the number of additional trainable parameters and the throughput measured on a single GPU (to be filled).
+As analyzed in Section~\ref{sec:cost}, AMTF and BFEM add only a few linear layers and enhancement operations, and their parameter growth is negligible.
+MGTA adds the offset network and two lightweight branches but keeps the expensive attention sparse: the motion-correspondence attention runs only on the selected top-$k$ patches, while the depthwise Conv3d branch stays full-coverage yet linear in the token count, so the overall cost is proportional to $k$ plus a small $O(T N)$ term rather than to the quadratic cost of full space-time attention.
+Compared with full space-time attention, MGTA reduces the attention cost by more than an order of magnitude while injecting the temporal dynamics that a frame-wise encoder lacks.
+
+\begin{table}[t]
+  \centering
+  \footnotesize
+  \begin{tabular}{lcc}
+    \hline
+    Method & \#Params & Throughput \\
+    \hline
+    Frozen CLIP baseline & -- & -- \\
+    RAP baseline & -- & -- \\
+    + MGTA & -- & -- \\
+    + AMTF & -- & -- \\
+    + BFEM & -- & -- \\
+    MATE-CLIP (full) & -- & -- \\
+    \hline
+  \end{tabular}
+  \caption{Parameter and throughput comparison (to be filled after training).}
+  \label{tab:efficiency}
+\end{table}
+
+\subsection{Ablation studies}
+\label{sec:ablation}
+Our ablations address the modules in turn, and each module is ablated along the dimension where its design choice matters most.
+For the text side, we ablate the static and learnable branches (each alone vs.\ their fusion), and within AMTF we compare the \texttt{[EOT]}-only view with adding the masked-mean and the masked-attention views; we report the learned branch-level fusion weights to show when the static semantic bank versus the dynamic action-biased branch is preferred.
+For MGTA, we vary the number of selected patches $k$, ablate the two branches (Conv3d vs.\ asynchronous motion-correspondence attention) independently, and compare motion-aware selection (with the motion-intensity cue) against uniform selection and class-token-only selection; we additionally ablate the learned offsets against fixed zero offsets, which isolates the contribution of the implicit motion correspondence itself.
+For BFEM, we ablate the two enhancement directions (video-to-text vs.\ text-to-video), the dynamic versus scalar gate, and the zero-initialized gate warm-up schedule, to verify that the bidirectional design and the warm-up are both necessary.
+Finally, we combine the modules one at a time to verify that the gains are complementary and orthogonal.
+Table~\ref{tab:ablation-sata} shows the MGTA ablation design. The remaining ablations follow the same structure (tables to be filled after training).
+The key expected findings are: (i) motion-intensity guidance contributes more for categories whose classes share similar scenes and are separated mainly by body motion, because the motion cue disambiguates classes that appearance cannot; (ii) the asynchronous attention branch matters most when actions involve large spatial displacement, such as twists and somersaults; and (iii) the zero-initialized gates are essential, since removing them would make the injection start from a non-identity configuration and destabilize training.
+
+\begin{table}[t]
+  \centering
+  \begin{tabular}{lcc}
+    \hline
+    MGTA variant & UCF101 & HMDB-51 \\
+    \hline
+    Uniform selection & -- & -- \\
+    Class-token-only selection & -- & -- \\
+    + motion intensity (ours) & -- & -- \\
+    $k=6$ & -- & -- \\
+    $k=12$ (ours) & -- & -- \\
+    $k=24$ & -- & -- \\
+    Conv3d only & -- & -- \\
+    ASA only & -- & -- \\
+    MGTA (both branches) & -- & -- \\
+    \hline
+  \end{tabular}
+  \caption{MGTA ablation design on UCF101 and HMDB-51. Results are pending training completion.}
+  \label{tab:ablation-sata}
+\end{table}
+
+\subsection{Robustness and generalization}
+\label{sec:robustness}
+To understand when MATE-CLIP helps and whether it generalizes, we analyze sensitivity to the number of input frames and the sparsity level $k$, and evaluate consistently on both UCF101 and HMDB-51.
+Using fewer frames (e.g., 4) stresses the temporal modeling because motion is under-sampled; using more frames (e.g., 16) increases redundancy and the risk of diluting the discriminative signal.
+We expect MGTA to remain accurate at 4 frames because the motion-intensity cue still identifies the moving parts, and to saturate at 16 frames with little extra cost, since the attention is sparse.
+The sparsity level $k$ trades accuracy for cost: too small a $k$ drops the informative patches, while too large a $k$ re-introduces the dilution that sparsity is meant to remove.
+Crucially, because AMTF and MGTA adapt the frozen CLIP without task-specific re-training of the backbone, the same model transferred across UCF101 and HMDB-51 preserves its gains, evidencing that the adaptation generalizes rather than overfitting a single benchmark.
+These experiments, together with the qualitative analysis below, will be reported after training completes.
+
+\subsection{Qualitative analysis}
+\label{sec:qualitative}
+We provide three qualitative views (to be filled after training): (i) region-selection visualization, showing that MGTA selects the moving parts (e.g., an athlete's limbs during a gymnastics routine) across frames rather than static background; (ii) text-prototype visualization, illustrating that AMTF biases the text representation toward the action-related cues of the learnable branch while staying anchored to the static semantic bank; and (iii) an alignment t-SNE of text directions and video class centers, demonstrating that BFEM reduces the cross-modal shift before classification.

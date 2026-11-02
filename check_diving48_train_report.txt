@@ -1,0 +1,71 @@
+===== Diving48 Train Rawframes Check =====
+Annotation file: /hy-tmp/AMS-Net-main/data/diving48/annotations/diving48_train_rawframes.txt
+Rawframes root:  /hy-tmp/Diving48_rawframes
+
+Total annotation lines: 15027
+Unique video ids:       15027
+Duplicate video ids:    0
+Bad format lines:       0
+Bad labels:             0
+Missing folders:        0
+Frame mismatches:       0
+Num classes:            47
+Label range:            0 to 47
+
+===== Missing folders examples =====
+
+===== Frame mismatch examples =====
+format: line_idx, video_id, expected_frames, real_frames, label
+
+===== Bad label examples =====
+
+===== Duplicate examples =====
+
+===== Label distribution =====
+0: 222
+1: 109
+2: 49
+3: 259
+4: 33
+5: 467
+6: 160
+7: 901
+8: 424
+9: 212
+10: 74
+11: 144
+12: 421
+13: 44
+14: 102
+15: 591
+16: 48
+17: 349
+18: 68
+19: 604
+20: 148
+21: 689
+22: 355
+23: 57
+24: 484
+25: 46
+26: 1053
+27: 250
+28: 326
+29: 231
+31: 683
+32: 61
+33: 568
+34: 571
+35: 992
+36: 346
+37: 69
+38: 91
+39: 45
+40: 48
+41: 160
+42: 130
+43: 406
+44: 518
+45: 559
+46: 816
+47: 44

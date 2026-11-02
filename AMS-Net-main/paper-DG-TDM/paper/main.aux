@@ -1,0 +1,193 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{diving48}
+\citation{goyal2017ssv2}
+\citation{carreira2017slowfast,feichtenhofer2019slowfast}
+\citation{bertasius2021timesformer,liu2022videoswin,tong2022videomae,wang2024internvideo}
+\citation{dvt2022}
+\citation{radford2021clip}
+\citation{lin2022evl}
+\citation{rasheed2023vificlip}
+\citation{dao2023mamba,videomamba2024}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\citation{tsm2018,carreira2017slowfast}
+\citation{bertasius2021timesformer}
+\citation{li2022mvitv2}
+\citation{li2022uniformer}
+\citation{videofocalnets2023}
+\citation{liu2022videoswin}
+\citation{tong2022videomae}
+\citation{wang2022bevt}
+\citation{orvit2022}
+\citation{wang2024internvideo}
+\citation{dvt2022}
+\citation{pan2022stadapter}
+\citation{lin2022evl}
+\citation{yang2023aim}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{2}{2}{Related Work}{section.2}{}}
+\citation{dao2023mamba}
+\citation{li2024videomamba}
+\citation{videomamba2024}
+\citation{radford2021clip}
+\citation{rasheed2023vificlip}
+\citation{lin2022evl}
+\citation{diving48}
+\citation{li2022dsts}
+\citation{wang2021tdn}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Method}{3}{section.3}\protected@file@percent }
+\newlabel{sec:method}{{3}{3}{Method}{section.3}{}}
+\citation{radford2021clip}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Left: the dual-granularity temporal dynamics module (DG-TDM), composed of the MoDeA branch (motion deformation attention) and the TSA branch (temporal state aggregation). Right: the STG block with bilateral window cross-attention, adaptive fusion, and gated refinement.}}{4}{figure.1}\protected@file@percent }
+\newlabel{fig:stg}{{1}{4}{Left: the dual-granularity temporal dynamics module (DG-TDM), composed of the MoDeA branch (motion deformation attention) and the TSA branch (temporal state aggregation). Right: the STG block with bilateral window cross-attention, adaptive fusion, and gated refinement}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Spatial prior and spatio-temporal guidance}{4}{subsection.3.1}\protected@file@percent }
+\newlabel{sec:stg}{{3.1}{4}{Spatial prior and spatio-temporal guidance}{subsection.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Dual-granularity temporal dynamics module}{5}{subsection.3.2}\protected@file@percent }
+\newlabel{sec:dgtdm}{{3.2}{5}{Dual-granularity temporal dynamics module}{subsection.3.2}{}}
+\citation{dvt2022}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Overall framework of DG-TDM. A frozen CLIP encoder extracts spatial priors from each frame; the spatial-temporal guidance (STG) branch injects these priors into a temporal action encoder through bilateral window cross-attention and adaptive gating. Inside each temporal stage, the dual-granularity temporal dynamics module (DG-TDM) refines the feature with a motion deformation attention (MoDeA) branch and a temporal state aggregation (TSA) branch.}}{6}{figure.2}\protected@file@percent }
+\newlabel{fig:arch}{{2}{6}{Overall framework of \dgtdm . A frozen CLIP encoder extracts spatial priors from each frame; the spatial-temporal guidance (STG) branch injects these priors into a temporal action encoder through bilateral window cross-attention and adaptive gating. Inside each temporal stage, the dual-granularity temporal dynamics module (DG-TDM) refines the feature with a motion deformation attention (MoDeA) branch and a temporal state aggregation (TSA) branch}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Adapter-style formulation}{6}{subsubsection.3.2.1}\protected@file@percent }
+\newlabel{sec:adapter}{{3.2.1}{6}{Adapter-style formulation}{subsubsection.3.2.1}{}}
+\newlabel{eq:down}{{7}{6}{Adapter-style formulation}{equation.3.7}{}}
+\newlabel{eq:dpe}{{8}{6}{Adapter-style formulation}{equation.3.8}{}}
+\newlabel{eq:modelocal}{{9}{6}{Adapter-style formulation}{equation.3.9}{}}
+\newlabel{eq:tsagate}{{10}{6}{Adapter-style formulation}{equation.3.10}{}}
+\newlabel{eq:adapterout}{{11}{6}{Adapter-style formulation}{equation.3.11}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Motion deformation attention (MoDeA)}{7}{subsubsection.3.2.2}\protected@file@percent }
+\newlabel{sec:modela}{{3.2.2}{7}{Motion deformation attention (MoDeA)}{subsubsection.3.2.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Temporal state aggregation (TSA)}{8}{subsubsection.3.2.3}\protected@file@percent }
+\newlabel{sec:tsa}{{3.2.3}{8}{Temporal state aggregation (TSA)}{subsubsection.3.2.3}{}}
+\newlabel{eq:tsa_fwd}{{21}{8}{Temporal state aggregation (TSA)}{equation.3.21}{}}
+\newlabel{eq:tsa_bwd}{{22}{8}{Temporal state aggregation (TSA)}{equation.3.22}{}}
+\citation{videomamba2024}
+\citation{diving48}
+\citation{goyal2017ssv2}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Complexity and training}{9}{subsection.3.3}\protected@file@percent }
+\newlabel{sec:complexity}{{3.3}{9}{Complexity and training}{subsection.3.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Experiments}{9}{section.4}\protected@file@percent }
+\newlabel{sec:experiments}{{4}{9}{Experiments}{section.4}{}}
+\citation{li2022dsts}
+\citation{dvt2022}
+\citation{li2022dsts}
+\citation{dvt2022}
+\citation{chen2022aknet}
+\citation{li2025can}
+\citation{cai2025loki}
+\citation{li2022dsts}
+\citation{dvt2022}
+\citation{chen2022aknet}
+\citation{li2025can}
+\citation{cai2025loki}
+\citation{li2022dsts}
+\citation{liu2022videoswin}
+\citation{li2022dsts}
+\citation{dvt2022}
+\citation{dvt2022}
+\citation{wang2021tdn}
+\citation{chen2022aknet}
+\citation{chen2022aknet}
+\citation{li2025can}
+\citation{li2025manet}
+\citation{cai2025loki}
+\citation{yang2023aim}
+\citation{liu2021tam}
+\citation{chen2022aknet}
+\citation{tu2023ila,liu2023stan,wang2024m2clip}
+\citation{zhou2024fease,li2025can,li2025manet}
+\citation{liu2021tam}
+\citation{chen2022aknet}
+\citation{tu2023ila,liu2023stan,wang2024m2clip}
+\citation{zhou2024fease,li2025can,li2025manet}
+\citation{liu2021tam}
+\citation{liu2020teinet}
+\citation{luo2019gst}
+\citation{meng2021adafuse}
+\citation{wang2021tdn}
+\citation{chen2022aknet}
+\citation{chen2022aknet}
+\citation{tu2023ila}
+\citation{liu2023stan}
+\citation{wang2024m2clip}
+\citation{zhou2024fease}
+\citation{li2025can}
+\citation{li2025manet}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Setup}{10}{subsection.4.1}\protected@file@percent }
+\newlabel{sec:setup}{{4.1}{10}{Setup}{subsection.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Comparison with state of the art}{10}{subsection.4.2}\protected@file@percent }
+\newlabel{sec:main}{{4.2}{10}{Comparison with state of the art}{subsection.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Ablation studies}{10}{subsection.4.3}\protected@file@percent }
+\newlabel{sec:ablation}{{4.3}{10}{Ablation studies}{subsection.4.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comparison on Diving48. Metrics are top-1 and top-5 accuracy (\%). The Input / views column preserves the notation used by each source: an explicit $frames\times clips\times crops$ value is shown when reported, while sources that report only the number of input frames retain a single frame-count value. Resolution-based configurations are also kept in their original form. Top-5 values are marked ``-'' where the source does not report them. ``$\dagger $'' marks the DSTS protocol \cite  {li2022dsts} and ``$\ddagger $'' the DVT protocol \cite  {dvt2022}; the two papers use different evaluation protocols, so values across the two groups are not directly comparable. The TDN row reports the corrected official result compiled in \cite  {chen2022aknet}, using the updated Diving48 annotations. The CAN row takes the $8$-frame ablation configuration from \cite  {li2025can}, whose main result uses $16$ frames; the AIM row reports the $8$-frame result reproduced by \cite  {cai2025loki}.}}{11}{table.1}\protected@file@percent }
+\newlabel{tab:diving48}{{1}{11}{Comparison on Diving48. Metrics are top-1 and top-5 accuracy (\%). The Input / views column preserves the notation used by each source: an explicit $frames\times clips\times crops$ value is shown when reported, while sources that report only the number of input frames retain a single frame-count value. Resolution-based configurations are also kept in their original form. Top-5 values are marked ``-'' where the source does not report them. ``$\dagger $'' marks the DSTS protocol \cite {li2022dsts} and ``$\ddagger $'' the DVT protocol \cite {dvt2022}; the two papers use different evaluation protocols, so values across the two groups are not directly comparable. The TDN row reports the corrected official result compiled in \cite {chen2022aknet}, using the updated Diving48 annotations. The CAN row takes the $8$-frame ablation configuration from \cite {li2025can}, whose main result uses $16$ frames; the AIM row reports the $8$-frame result reproduced by \cite {cai2025loki}}{table.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Comparison on Something-Something V2 with $8$ input frames and lightweight ResNet-50 backbones. Metrics are top-1 and top-5 accuracy (\%). TANet follows its original $8\times 1\times 1$ protocol \cite  {liu2021tam}; TDN and AK-Net follow the unified $8$-frame comparison in AK-Net Table II \cite  {chen2022aknet}; ILA, STAN-conv, and M2-CLIP follow their reported multi-view 8-frame settings \cite  {tu2023ila,liu2023stan,wang2024m2clip}. FEASE-Net, CAN, and MANet use their reported $8\times 1\times 1$ configurations \cite  {zhou2024fease,li2025can,li2025manet}. A dash denotes a top-5 value not reported by the source.}}{11}{table.2}\protected@file@percent }
+\newlabel{tab:ssv2}{{2}{11}{Comparison on Something-Something V2 with $8$ input frames and lightweight ResNet-50 backbones. Metrics are top-1 and top-5 accuracy (\%). TANet follows its original $8\times 1\times 1$ protocol \cite {liu2021tam}; TDN and AK-Net follow the unified $8$-frame comparison in AK-Net Table II \cite {chen2022aknet}; ILA, STAN-conv, and M2-CLIP follow their reported multi-view 8-frame settings \cite {tu2023ila,liu2023stan,wang2024m2clip}. FEASE-Net, CAN, and MANet use their reported $8\times 1\times 1$ configurations \cite {zhou2024fease,li2025can,li2025manet}. A dash denotes a top-5 value not reported by the source}{table.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Progressive ablation on Diving48 with $8\times 1\times 1$ views. Each row adds one component of DG-TDMto the previous configuration; the last column reports the top-1 gain over the preceding row. Metrics are top-1 and top-5 accuracy (\%).}}{12}{table.3}\protected@file@percent }
+\newlabel{tab:ablation}{{3}{12}{Progressive ablation on Diving48 with $8\times 1\times 1$ views. Each row adds one component of \dgtdm to the previous configuration; the last column reports the top-1 gain over the preceding row. Metrics are top-1 and top-5 accuracy (\%)}{table.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Design-choice ablation on Diving48 with $8\times 1\times 1$ views. Each row switches off one internal design choice of the full DG-TDMwhile keeping the affected component and the remaining configuration fixed. Metrics are top-1 and top-5 accuracy (\%).}}{12}{table.4}\protected@file@percent }
+\newlabel{tab:design}{{4}{12}{Design-choice ablation on Diving48 with $8\times 1\times 1$ views. Each row switches off one internal design choice of the full \dgtdm while keeping the affected component and the remaining configuration fixed. Metrics are top-1 and top-5 accuracy (\%)}{table.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Efficiency analysis}{12}{subsection.4.4}\protected@file@percent }
+\newlabel{sec:efficiency}{{4.4}{12}{Efficiency analysis}{subsection.4.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Qualitative analysis}{12}{subsection.4.5}\protected@file@percent }
+\newlabel{sec:qual}{{4.5}{12}{Qualitative analysis}{subsection.4.5}{}}
+\bibstyle{unsrtnat}
+\bibdata{references}
+\bibcite{diving48}{{1}{2018}{{Li et~al.}}{{Li, Li, and Vasconcelos}}}
+\bibcite{goyal2017ssv2}{{2}{2017}{{Goyal et~al.}}{{Goyal, Kahou, Michalski, Materzynska, Westphal, Kim, Haenel, Fr{\"u}nd, Yianilos, Mueller-Freitag, et~al.}}}
+\bibcite{carreira2017slowfast}{{3}{2017}{{Carreira and Zisserman}}{{}}}
+\bibcite{feichtenhofer2019slowfast}{{4}{2019}{{Feichtenhofer et~al.}}{{Feichtenhofer, Fan, Malik, and He}}}
+\bibcite{bertasius2021timesformer}{{5}{2021}{{Bertasius et~al.}}{{Bertasius, Wang, and Torresani}}}
+\bibcite{liu2022videoswin}{{6}{2022}{{Liu et~al.}}{{Liu, Ning, Cao, Wei, Zhang, Lin, and Hu}}}
+\bibcite{tong2022videomae}{{7}{2022}{{Tong et~al.}}{{Tong, Song, Wang, and Wang}}}
+\bibcite{wang2024internvideo}{{8}{2024{a}}{{Wang et~al.}}{{Wang, Chen, Wu, Chen, Dai, Liu, Jiang, Zhou, Shen, Fan, et~al.}}}
+\bibcite{dvt2022}{{9}{2022}{{Wang and Torresani}}{{}}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Hyperparameter sensitivity of the STG guidance on Diving48 with $8$ frames. The starred value marks the default of the full model (Table\nobreakspace  {}\ref  {tab:ablation}); each hyperparameter is swept to one smaller and one larger value. Metrics are top-1 and top-5 accuracy (\%).}}{13}{table.5}\protected@file@percent }
+\newlabel{tab:hyper}{{5}{13}{Hyperparameter sensitivity of the STG guidance on Diving48 with $8$ frames. The starred value marks the default of the full model (Table~\ref {tab:ablation}); each hyperparameter is swept to one smaller and one larger value. Metrics are top-1 and top-5 accuracy (\%)}{table.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{13}{section.5}\protected@file@percent }
+\newlabel{sec:conclusion}{{5}{13}{Conclusion}{section.5}{}}
+\bibcite{radford2021clip}{{10}{2021}{{Radford et~al.}}{{Radford, Kim, Hallacy, Ramesh, Goh, Agarwal, Sastry, Askell, Mishkin, Clark, et~al.}}}
+\bibcite{lin2022evl}{{11}{2022}{{Lin et~al.}}{{Lin, Geng, Zhang, Gao, de~Melo, Wang, Dai, Qiao, and Li}}}
+\bibcite{rasheed2023vificlip}{{12}{2023}{{Rasheed et~al.}}{{Rasheed, Khattak, Maaz, Shoukry, Khan, Khan, and Yang}}}
+\bibcite{dao2023mamba}{{13}{2023}{{Gu and Dao}}{{}}}
+\bibcite{videomamba2024}{{14}{2024}{{Park et~al.}}{{Park, Kim, Ko, Kim, and Kim}}}
+\bibcite{tsm2018}{{15}{2018}{{Lin et~al.}}{{Lin, Gan, and Han}}}
+\bibcite{li2022mvitv2}{{16}{2022{a}}{{Li et~al.}}{{Li, Wu, Fan, Mangalam, Xiong, Malik, and Feichtenhofer}}}
+\bibcite{li2022uniformer}{{17}{2022{b}}{{Li et~al.}}{{Li, Wang, Peng, Song, Liu, Li, and Qiao}}}
+\bibcite{videofocalnets2023}{{18}{2023}{{Wasim et~al.}}{{Wasim, Khattak, Naseer, Khan, Shah, and Khan}}}
+\bibcite{wang2022bevt}{{19}{2022}{{Wang et~al.}}{{Wang, Chen, Wu, Chen, Dai, Liu, Jiang, Zhou, and Qiao}}}
+\bibcite{orvit2022}{{20}{2022}{{Girdhar et~al.}}{{Girdhar, Ramanan, Gupta, Sivic, and Russell}}}
+\bibcite{pan2022stadapter}{{21}{2022}{{Pan et~al.}}{{Pan, Lin, Zhu, Shao, and Li}}}
+\bibcite{yang2023aim}{{22}{2023}{{Yang et~al.}}{{Yang, Zhu, Xie, Zhang, Chen, and Li}}}
+\bibcite{li2024videomamba}{{23}{2024}{{Li et~al.}}{{Li, Li, Wang, He, Wang, Wang, and Qiao}}}
+\bibcite{li2022dsts}{{24}{2022{c}}{{Li et~al.}}{{Li, Foo, Ke, Rahmani, Wang, Wang, and Liu}}}
+\bibcite{wang2021tdn}{{25}{2021}{{Wang et~al.}}{{Wang, Tong, Ji, and Wu}}}
+\bibcite{chen2022aknet}{{26}{2022}{{Chen et~al.}}{{Chen, Han, Wang, Sun, and Yang}}}
+\bibcite{li2025can}{{27}{2025{a}}{{Li et~al.}}{{Li, Yang, Wang, Wang, and Fei}}}
+\bibcite{cai2025loki}{{28}{2025}{{Cai et~al.}}{{Cai, Pan, and Yang}}}
+\bibcite{li2025manet}{{29}{2025{b}}{{Li et~al.}}{{Li, Yang, and Wang}}}
+\bibcite{liu2021tam}{{30}{2021}{{Liu et~al.}}{{Liu, Wang, Wu, Qian, and Lu}}}
+\bibcite{tu2023ila}{{31}{2023}{{Tu et~al.}}{{Tu, Dai, Wu, Cheng, Hu, and Jiang}}}
+\bibcite{liu2023stan}{{32}{2023}{{Liu et~al.}}{{Liu, Huang, Li, Feng, Wu, and Li}}}
+\bibcite{wang2024m2clip}{{33}{2024{b}}{{Wang et~al.}}{{Wang, Xing, Jiang, Chen, Mei, Zuo, Dai, Wang, and Liu}}}
+\bibcite{zhou2024fease}{{34}{2024}{{Zhou et~al.}}{{Zhou, Lu, and Jiang}}}
+\bibcite{liu2020teinet}{{35}{2020}{{Liu et~al.}}{{Liu, Luo, Wang, Wang, Tai, Wang, Li, Huang, and Lu}}}
+\bibcite{luo2019gst}{{36}{2019}{{Luo and Yuille}}{{}}}
+\bibcite{meng2021adafuse}{{37}{2021}{{Meng et~al.}}{{Meng, Panda, Lin, Sattigeri, Karlinsky, Saenko, Oliva, and Feris}}}
+\gdef \@abspage@last{15}

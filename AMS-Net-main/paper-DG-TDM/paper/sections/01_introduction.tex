@@ -1,0 +1,85 @@
+\section{Introduction}
+\label{sec:intro}
+
+Fine-grained action recognition distinguishes actions that look nearly
+identical in single frames and differ mainly in how the body moves. Recent
+benchmarks drive the task toward this setting: Diving48 \cite{diving48}
+separates dives by their rotation and timing, and Something-Something V2
+\cite{goyal2017ssv2} separates everyday object manipulations by the direction
+and manner of the motion, such as pushing something from left to right versus
+from right to left. In both datasets, the classes are not separated by the
+scene or by whole-body appearance but by how a small set of body parts moves
+over time. On Diving48, for example, a $720^\circ$ rotation and a $900^\circ$
+rotation of the same dive are two classes, yet every frame of the two videos
+shows the same diver in the same poses against the same pool background; only
+across frames does the rotation itself become visible.
+
+This setting raises two problems. The first is spatial: since all classes
+share the same background, the background carries no label-relevant
+information and only distracts the model, so recognition must come from the
+region where the body moves. The model thus has to know where to look before
+it can read the motion. The second is temporal, and it spans two scales. On
+the short scale, a class is often decided by a small local displacement over
+a few frames, such as the path of a hand or the change in the angle of a limb.
+The position that carries this detail moves from frame to frame, so a fixed
+sampling grid loses it. On the long scale, the full meaning of an action is
+determined by how the entire sequence evolves, so the model must maintain a
+state over time rather than treat each frame in isolation. Both scales matter,
+and dropping either one loses evidence that separates otherwise similar
+classes.
+
+Current video models only partially meet these needs. 3D CNNs
+\cite{carreira2017slowfast,feichtenhofer2019slowfast} and video transformers
+trained on large corpora
+\cite{bertasius2021timesformer,liu2022videoswin,tong2022videomae,wang2024internvideo}
+capture temporal structure, but they compute features at every position of
+every frame, spending most of their capacity on background regions that carry
+no signal; moreover, their sampling and attention are either too rigid to
+follow a moving body part or too coarse to resolve a small displacement.
+Deformable video transformers \cite{dvt2022} learn where to attend and perform
+well on fine-grained benchmarks, but they select whole patches and therefore
+miss the sub-window displacement that separates fine-grained classes. CLIP
+\cite{radford2021clip} is strong precisely where the first problem lies:
+pre-trained on massive image--text data, it judges reliably where people and
+action-relevant content appear in a frame. Yet when CLIP is adapted to video,
+either through frozen adapters \cite{lin2022evl} or end-to-end fine-tuning
+\cite{rasheed2023vificlip}, the prior is absorbed into the encoder itself and
+is not used to tell a separate recognition branch where the action is.
+State-space models \cite{dao2023mamba,videomamba2024} aggregate long sequences
+efficiently, but the spatial side remains open.
+
+These observations suggest a division of labor. A frozen spatial expert
+answers where the action is, and a trainable temporal encoder learns how it
+moves. Because the expert is frozen, its positional judgment stays constant
+throughout training and cannot overfit the background statistics of a small
+fine-grained dataset; because the encoder is trained end-to-end, it can shape
+its features around the motion. The two sides are complementary rather than
+redundant.
+
+Following this idea, we propose \dgtdm, a three-branch framework. A frozen
+CLIP encoder serves as the spatial expert, and a spatio-temporal guidance
+(STG) branch transfers its priors to the temporal encoder through bilateral
+window cross-attention and adaptive gating, so that the encoder focuses on
+the action region. The temporal encoder is built on a 2D ResNet backbone,
+which has no temporal modeling of its own. We therefore insert, at every
+stage, a dual-granularity temporal dynamics module (DG-TDM) that adds temporal
+modeling on the 2D feature stream without inflating the backbone into a 3D
+network. This module gives the overall framework its name, so we use the same
+acronym for both throughout the paper. DG-TDM works at the two time scales of the motion: its MoDeA branch
+predicts dense cross-frame sampling offsets to follow short-term body-part
+displacement, and its TSA branch carries a long-term state memory over the
+sequence to model how the action develops.
+
+In summary, our main contributions are:
+\begin{itemize}
+  \item We propose \dgtdm, a three-branch framework for fine-grained action
+  recognition that assigns localization to a frozen CLIP spatial expert and
+  motion modeling to a trainable temporal encoder.
+  \item We design a spatio-temporal guidance branch that injects the frozen
+  priors into the temporal encoder through bilateral window cross-attention
+  and adaptive gating, so that the encoder focuses on the action region.
+  \item We develop a dual-granularity temporal dynamics module for the 2D
+  backbone, in which MoDeA tracks short-term body-part displacement through
+  dense deformable sampling and TSA models long-term evolution through a
+  bidirectional state memory.
+\end{itemize}

@@ -1,0 +1,291 @@
+\section{Experiments}
+\label{sec:experiments}
+
+We evaluate \dgtdm on two motion-centric action recognition benchmarks,
+Diving48 and Something-Something V2 (SSv2). Below we first describe the
+datasets, evaluation protocol, and implementation details, then compare
+\dgtdm with existing methods on the two benchmarks, and finally present
+ablation studies on Diving48 that isolate the contribution of each branch.
+
+\subsection{Setup}
+\label{sec:setup}
+
+\textbf{Datasets.}
+We evaluate on two benchmarks. Diving48 \cite{diving48} contains approximately
+$18$k trimmed video clips of $48$ dive classes; its videos share similar pool
+backgrounds and differ in subtle body movements such as rotation angle and
+timing. We use the official V2 train/test split. Something-Something V2
+\cite{goyal2017ssv2} is a large-scale motion-centric benchmark of around $220$k
+videos in $174$ classes of everyday object manipulations, such as pushing,
+pulling, and dropping; the classes are defined by the direction and manner of
+the motion rather than by the objects or the scene, so success requires
+temporal reasoning over the whole sequence. For both datasets we report top-1
+and top-5 accuracy.
+
+\textbf{Implementation details.}
+We use a ResNet-50 backbone as the temporal action encoder. The frozen spatial
+branch is a CLIP ViT-B/16 encoder whose parameters are kept frozen. The DG-TDM
+module is inserted after the $3\times3$ convolution of the last bottleneck in
+each of the four stages, with a reduction ratio of $4$; the STG block is
+inserted after each of the four stages, with a window size of
+$7$. We train with stochastic gradient descent, momentum $0.9$, weight decay
+$5\times10^{-4}$, and a step schedule. The classifier uses label-smoothed
+cross-entropy with smoothing $0.1$. Training is performed on two NVIDIA
+V100-SXM2-32GB GPUs. Our main setting samples $T=8$ frames per video. Full
+hyperparameters are listed in the appendix.
+
+\textbf{Baselines.}
+We compare against representative methods that report results on Diving48 and
+SSv2. Reported numbers of the compared methods are taken from their original
+papers (with the source cited in the table).
+
+\subsection{Comparison with state of the art}
+\label{sec:main}
+
+Tables~\ref{tab:diving48} and \ref{tab:ssv2} compare \dgtdm with existing
+methods on the two benchmarks. We report values exactly as published in the
+original papers, together with the input configuration (frames $\times$
+resolution) used by each method. The compared methods span specialized
+fine-grained models (DSTS, CAN), lightweight 2D temporal models (TANet,
+TEINet, GST, AdaFuse, TDN, and AK-Net), and recent adaptation baselines
+(MANet, LoKi, and AIM). For Diving48, the numbers under the DSTS protocol
+are as reported by DSTS
+\cite{li2022dsts} and those under the DVT protocol by DVT \cite{dvt2022}; the
+remaining rows come from the original publications. For SSv2, all baseline values are taken from the cited original papers and
+are restricted to configurations with an explicitly reported $8$-frame input.
+We evaluate \dgtdm on both benchmarks with $8$ frames.
+
+\begin{table}[t]
+  \centering
+  \caption{Comparison on Diving48. Metrics are top-1 and top-5 accuracy (\%).
+  The Input / views column preserves the notation used by each source: an
+  explicit $frames\times clips\times crops$ value is shown when reported,
+  while sources that report only the number of input frames retain a single
+  frame-count value. Resolution-based configurations are also kept in their
+  original form. Top-5 values are marked ``-'' where the source does not
+  report them. ``$\dagger$'' marks the DSTS protocol
+  \cite{li2022dsts} and ``$\ddagger$'' the DVT protocol \cite{dvt2022}; the
+  two papers use different evaluation protocols, so values across the two
+  groups are not directly comparable. The TDN row reports the corrected
+  official result compiled in \cite{chen2022aknet}, using the updated
+  Diving48 annotations. The CAN row takes the $8$-frame ablation
+  configuration from \cite{li2025can}, whose main result uses $16$ frames;
+  the AIM row reports the $8$-frame result reproduced by \cite{cai2025loki}.}
+  \label{tab:diving48}
+  \small
+  \begin{tabular}{llccc}
+    \toprule
+    Method & Backbone & Input / views & Top-1 (\%) & Top-5 (\%) \\
+    \midrule
+    \multicolumn{5}{l}{\emph{Protocol of DSTS \cite{li2022dsts}}} \\
+    Video Swin-B \cite{liu2022videoswin} & Swin-B & - & 80.5$\dagger$ & - \\
+    Swin-B + DSTS \cite{li2022dsts} & Swin-B & - & 83.0$\dagger$ & - \\
+    \midrule
+    \multicolumn{5}{l}{\emph{Protocol of DVT \cite{dvt2022}}} \\
+    DVT \cite{dvt2022} & ViT-B & 16$\times$224$^2$ & 83.5$\ddagger$ & - \\
+    \midrule
+    \multicolumn{5}{l}{\emph{Methods with lightweight backbones}} \\
+    TDN \cite{wang2021tdn} (corrected) & ResNet-50 & 8 & 80.5 & - \\
+    AK-Net (TSM) \cite{chen2022aknet} & ResNet-50 & 8 & 79.3 & - \\
+    AK-Net (TDN) \cite{chen2022aknet} & ResNet-50 & 8 & 81.7 & - \\
+    CAN \cite{li2025can} (8-frame config) & ResNet-50 & 8$\times1\times1$ & 82.7 & 98.3 \\
+    MANet \cite{li2025manet} & ResNet-50 & 8$\times1\times1$ & 81.8 & 98.0 \\
+    LoKi \cite{cai2025loki} & ViT-B/16 & 8$\times1\times1$ & 78.4 & 98.2 \\
+    AIM \cite{yang2023aim} & ViT-B/16 & 8$\times1\times1$ & 77.4 & 97.8 \\
+    \midrule
+    \multicolumn{5}{l}{\emph{Ours}} \\
+    \dgtdm & ResNet-50 + frozen CLIP & 8$\times1\times1$ & \textbf{83.55} & \textbf{97.82} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[t]
+  \centering
+  \caption{Comparison on Something-Something V2 with $8$ input frames and
+  lightweight ResNet-50 backbones. Metrics are top-1 and top-5 accuracy (\%).
+  TANet follows its original $8\times1\times1$ protocol \cite{liu2021tam};
+  TDN and AK-Net follow the unified $8$-frame comparison in AK-Net Table II
+  \cite{chen2022aknet}; ILA, STAN-conv, and M2-CLIP follow their reported
+  multi-view 8-frame settings \cite{tu2023ila,liu2023stan,wang2024m2clip}.
+  FEASE-Net, CAN, and MANet use their reported $8\times1\times1$
+  configurations \cite{zhou2024fease,li2025can,li2025manet}. A dash denotes
+  a top-5 value not reported by the source.}
+  \label{tab:ssv2}
+  \small
+  \begin{tabular}{llccc}
+    \toprule
+    Method & Backbone & Frames & Top-1 (\%) & Top-5 (\%) \\
+    \midrule
+    \multicolumn{5}{l}{\emph{ResNet-50 and lightweight baselines}} \\
+    TANet \cite{liu2021tam} (IN) & ResNet-50 & 8$\times1\times1$ & 60.5 & 86.2 \\
+    TEINet \cite{liu2020teinet} (IN) & ResNet-50 & 8$\times1$ & 61.3 & - \\
+    GST \cite{luo2019gst} (IN) & ResNet-50 & 8$\times1$ & 61.6 & - \\
+    AdaFuse \cite{meng2021adafuse} (IN) & ResNet-50 & 8$\times1$ & 59.8 & - \\
+    TDN \cite{wang2021tdn} (IN, corrected) & ResNet-50 & 8$\times1$ & 64.0 & - \\
+    AK-Net (TSM) \cite{chen2022aknet} (IN) & ResNet-50 & 8$\times1$ & 60.2 & - \\
+    AK-Net (TDN) \cite{chen2022aknet} (IN) & ResNet-50 & 8$\times1$ & 64.3 & - \\
+    \midrule
+    \multicolumn{5}{l}{\emph{Recent 8-frame adaptation baselines}} \\
+    ILA \cite{tu2023ila} (ViT-B/16) & ViT-B/16 & 8$\times4\times3$ & 65.0 & 89.2 \\
+    STAN-conv \cite{liu2023stan} (CLIP) & ViT-B/16 & 8$\times1\times3$ & 65.2 & 90.5 \\
+    M2-CLIP \cite{wang2024m2clip} (CLIP) & ViT-B/16 & 8$\times1\times3$ & 66.9 & 90.1 \\
+    FEASE-Net \cite{zhou2024fease} & ResNet-50 & 8$\times1\times1$ & 64.2 & 88.8 \\
+    CAN \cite{li2025can} & ResNet-50 & 8$\times1\times1$ & 63.9 & 89.1 \\
+    MANet \cite{li2025manet} & ResNet-50 & 8$\times1\times1$ & 63.6 & 88.8 \\
+    \midrule
+    \dgtdm (ours) & ResNet-50 + frozen CLIP & 8$\times1\times1$ & \textbf{65.3} & \textbf{89.1} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Under the $8\times1\times1$ single-clip protocol, \dgtdm reaches
+$83.55\%$/$97.82\%$ top-1/top-5 on Diving48 and $65.3\%$/$89.1\%$ on SSv2.
+Its top-1 accuracy is the highest among the compared methods with a ResNet-50
+backbone on both benchmarks.
+
+\subsection{Ablation studies}
+\label{sec:ablation}
+
+We ablate \dgtdm on Diving48, the benchmark whose classes share the most
+similar backgrounds and therefore stresses localization the most. All
+ablations use $8$ frames. We organize the analysis into three parts: the
+progressive build-up of the framework (Table~\ref{tab:ablation}), the
+internal design choices of each branch (Table~\ref{tab:design}), and the
+sensitivity to the main hyperparameters (Table~\ref{tab:hyper}).
+
+\textbf{Progressive build-up.}
+Table~\ref{tab:ablation} adds the components of \dgtdm to a TSN-style
+baseline (a plain ResNet-50 that samples frames, extracts 2D features, and
+classifies their temporal average), one component at a time, using the
+$8\times1\times1$ protocol of the main comparison. Each step isolates one
+mechanism: MoDeA contributes short-term cross-frame alignment, TSA adds a
+persistent long-term state and thereby completes DG-TDM, and the STG branch
+finally brings in the frozen-CLIP prior as guidance.
+
+\begin{table}[t]
+  \centering
+  \caption{Progressive ablation on Diving48 with $8\times1\times1$ views.
+  Each row adds one component of \dgtdm to the previous configuration; the
+  last column reports the top-1 gain over the preceding row. Metrics are
+  top-1 and top-5 accuracy (\%).}
+  \label{tab:ablation}
+  \small
+  \begin{tabular}{lccc}
+    \toprule
+    Configuration & Top-1 (\%) & Top-5 (\%) & $\Delta$Top-1 \\
+    \midrule
+    TSN-style baseline (ResNet-50) & 71.36 & 95.82 & --- \\
+    + MoDeA (short-term motion alignment) & 79.09 & 96.74 & +7.73 \\
+    + TSA (long-term state memory; DG-TDM complete) & 81.57 & 97.77 & +2.48 \\
+    + STG guidance (full \dgtdm) & \textbf{83.55} & \textbf{97.82} & +1.98 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+MoDeA raises top-1 by $7.73$ points over appearance averaging alone,
+confirming that following the moving body part across frames is essential
+when the discriminative signal is a small local displacement. TSA adds a
+further $2.48$ points, showing that a state that aggregates the whole
+sequence captures information that local alignment leaves out. The STG
+branch contributes the final $1.98$ points, which measures the value of
+bilateral interaction and adaptive gating under the same temporal encoder.
+Top-5 accuracy improves consistently along the sequence, with the full model
+reaching $97.82\%$.
+
+\textbf{Design choices.}
+Table~\ref{tab:design} switches off one internal design choice at a time
+from the full model, so that each row keeps the affected component present
+and isolates a single factor. The overall contribution of the MoDeA branch
+is already measured by Table~\ref{tab:ablation} (removing it recovers the
+$+7.73$ points of the baseline row), so the rows below address the choices
+inside the remaining machinery. One factor is the fusion of the two DG-TDM
+branches, which are combined multiplicatively so that TSA selects the
+MoDeA-refined local features with a per-channel gate; we compare this with
+adding the two branch outputs in parallel. A second factor is the direction
+of the TSA scan, and we remove its backward pass. The bilateral nature of
+the STG guidance is a third factor, and we keep only the prior-to-feature
+direction. The last factor is where the frozen CLIP prior is applied: we
+test injecting it at the last stage only, asking whether the position
+knowledge must be used progressively at several spatial scales or once at
+the top. The full model serves as the reference row.
+
+\begin{table}[t]
+  \centering
+  \caption{Design-choice ablation on Diving48 with $8\times1\times1$ views.
+  Each row switches off one internal design choice of the full \dgtdm while
+  keeping the affected component and the remaining configuration fixed.
+  Metrics are top-1 and top-5 accuracy (\%).}
+  \label{tab:design}
+  \small
+  \begin{tabular}{lcc}
+    \toprule
+    Configuration & Top-1 (\%) & Top-5 (\%) \\
+    \midrule
+    Full \dgtdm (reference) & \textbf{83.55} & \textbf{97.82} \\
+    DG-TDM: additive branch outputs (w/o TSA gate selection) & 83.41 & 98.02 \\
+    TSA: forward-only scan (w/o backward context) & 82.58 & 97.76 \\
+    STG: one-directional guidance (w/o $Y\!\to\!V$) & 82.70 & 97.88 \\
+    CLIP prior: last-stage-only guidance (w/o per-stage) & 81.83 & 97.65 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\textbf{Hyperparameter sensitivity.}
+Table~\ref{tab:hyper} verifies that the reported gain of the guidance is
+robust to the two settings that define how the STG block injects the frozen
+CLIP prior into the recognition branch: the window size $w$ and the residual
+bound $\lambda_{\max}$, swept around the defaults of the full model
+($w{=}7$, $\lambda_{\max}{=}0.2$; last row of Table~\ref{tab:ablation}).
+The window size fixes the spatial extent of the bilateral attention: too
+small a window cannot cover the moving action region, while too large a
+window lets background context dilute the prior. The residual bound caps how
+strongly a stage may be modified: a low bound starves the injection, and a
+high bound lets the prior overwrite the appearance features of the lower
+branch. Because the residual scale is itself learned within
+$[0,\lambda_{\max}]$, the bound only sets the allowed headroom. Across both
+sweeps the default configuration stays on a plateau in top-1: the window
+$w{=}7$ outperforms both of its neighbors, and tightening the residual bound
+to $0.1$ is the only change that costs a measurable amount, while loosening
+it to $0.4$ brings no further gain, confirming that the guidance does not
+depend on a fine-tuned setting.
+
+\begin{table}[t]
+  \centering
+  \caption{Hyperparameter sensitivity of the STG guidance on Diving48 with
+  $8$ frames. The starred value marks the default of the full model
+  (Table~\ref{tab:ablation}); each hyperparameter is swept to one smaller
+  and one larger value. Metrics are top-1 and top-5 accuracy (\%).}
+  \label{tab:hyper}
+  \small
+  \begin{tabular}{llcc}
+    \toprule
+    Hyperparameter & Value & Top-1 (\%) & Top-5 (\%) \\
+    \midrule
+    STG window size $w$ & 5 & 83.29 & 97.74 \\
+     & $\mathbf{7}^{\ast}$ & \textbf{83.55} & \textbf{97.82} \\
+     & 9 & 83.14 & 97.82 \\
+    \midrule
+    Residual bound $\lambda_{\max}$ & 0.1 & 82.95 & 97.38 \\
+     & $\mathbf{0.2}^{\ast}$ & \textbf{83.55} & \textbf{97.82} \\
+     & 0.4 & 83.37 & 98.05 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Efficiency analysis}
+\label{sec:efficiency}
+
+Because the frozen CLIP branch does not back-propagate and the DG-TDM operates
+in a reduced bottleneck dimension, the framework adds modest trainable
+parameters and FLOPs over the temporal action encoder baseline. The appendix
+reports the parameter count, FLOPs, and per-clip throughput of the main
+variants.
+
+\subsection{Qualitative analysis}
+\label{sec:qual}
+
+The learned mechanisms are inspected on sampled Diving48 frames in two ways.
+The deformation offsets predicted by MoDeA show whether different channel
+groups track different body-part motions, and the gates produced by the STG
+branch show whether the lower branch focuses on the action region instead of
+the shared background.

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img">
+
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#8EA0C5"/>
+  </marker>
+  <filter id="softShadow" x="-15%" y="-20%" width="130%" height="145%">
+    <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#2F3A5F" flood-opacity="0.10"/>
+  </filter>
+  <linearGradient id="hero" x1="0" x2="1" y1="0" y2="1">
+    <stop offset="0%" stop-color="#F8FAFF"/>
+    <stop offset="100%" stop-color="#EEF3FF"/>
+  </linearGradient>
+</defs>
+
+<rect width="1200" height="430" fill="url(#hero)"/>
+<style>
+text { font-family: Inter, "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif; }
+.small { fill: #667085; font-size: 13px; }
+.mono { font-family: "JetBrains Mono", Consolas, monospace; }
+</style>
+<text x="60" y="58" font-size="30" font-weight="800" fill="#233044" text-anchor="start">評審與修訂評分</text>
+<rect x="90" y="150" width="220" height="150" rx="24" fill="#DDEBFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="200" y="205" font-size="17" font-weight="850" fill="#233044" text-anchor="middle">當前稿件</text>
+<text x="200" y="245" font-size="13" font-weight="600" fill="#667085" text-anchor="middle">距離錄用標準多遠</text>
+<rect x="360" y="150" width="220" height="150" rx="24" fill="#E9DFFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="470" y="205" font-size="17" font-weight="850" fill="#233044" text-anchor="middle">版本進步</text>
+<text x="470" y="245" font-size="13" font-weight="600" fill="#667085" text-anchor="middle">是否優於上一版</text>
+<rect x="630" y="150" width="220" height="150" rx="24" fill="#DFF7EA" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="740" y="205" font-size="17" font-weight="850" fill="#233044" text-anchor="middle">問題記錄</text>
+<text x="740" y="245" font-size="13" font-weight="600" fill="#667085" text-anchor="middle">已解決、部分解決、新問題</text>
+<rect x="900" y="150" width="220" height="150" rx="24" fill="#FFE9C7" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="1010" y="205" font-size="17" font-weight="850" fill="#233044" text-anchor="middle">評審信心</text>
+<text x="1010" y="245" font-size="13" font-weight="600" fill="#667085" text-anchor="middle">判斷依據是否充分</text>
+</svg>

@@ -1,0 +1,26 @@
+title,venue,year,url,type,insight,completeness,evidence,note
+ActionCLIP: A New Paradigm for Video Action Recognition,AAAI,2022,https://arxiv.org/abs/2109.08472,method+benchmark,4,4,4,对比对齐范式开山，prompt+fine-tune
+X-CLIP: End-to-End Cross-modal Attention for Action Recognition without Pre-training,NeurIPS,2022,https://arxiv.org/abs/2207.07285,method+benchmark,5,4,5,video-specific prompt + text-to-video attention，零样本/少样本
+Frozen CLIP Models are Efficient Video Learners (EVL),ECCV,2022,https://arxiv.org/abs/2208.03550,method+benchmark,4,4,4,frozen CLIP + 轻量 temporal transformer decoder
+Revisiting Temporal Modeling for CLIP-based Image-to-Video Adaptation (STAN),CVPR,2023,https://arxiv.org/abs/2301.11116,method+benchmark,4,4,4,spatio-temporal adapter 位置分析
+Text4Vis: Text-guided visual prompts,CVPR,2023,https://arxiv.org/abs/2305.15377,method+benchmark,3,3,3,视频→文本 caption prompt
+Vita-CLIP: Video and text adaptive CLIP via Multimodal Prompting in ECCV,ECCV,2024,https://arxiv.org/abs/2304.03307,method+benchmark,4,4,4,用户已用框架
+Temporally Contextualized CLIP (TC-CLIP),ECCV,2024,https://arxiv.org/abs/2404.09490,method+benchmark,4,4,4,时序上下文化注入
+A5: Alignment, attraction and disentanglement,AAAI,2024,https://arxiv.org/abs/2401.11649,method+benchmark,3,3,3,多任务对齐
+CLIP4Video,ACM MM,2022,https://arxiv.org/abs/2109.05210,method+benchmark,3,3,3,对比对齐+动量蒸馏
+VLPA-CLIP,Pattern Recognition,2025,https://www.sciencedirect.com/science/article/pii/S0031320325004303,method+benchmark,3,3,3,语言prompt+视觉adapter
+BridgeFormer: Bridging Video-text Retrieval with Multiple Choice Questions,CVPR,2022,https://arxiv.org/abs/2201.04850,method+benchmark,4,4,4,image bridge+video bridge 双桥与文本交互
+CLIP4Clip: An Empirical Study of CLIP for End to End Video Clip Retrieval,ACM MM,2022,https://arxiv.org/abs/2104.08860,method+benchmark,4,4,4,三种帧→视频相似度聚合方式对比
+Frozen in Time: A Joint Video and Image Encoder for End-to-End Retrieval,ICCV,2021,https://ieeexplore.ieee.org/document/9711165,method+benchmark,4,4,4,image-text+video-text 联合预训练
+InternVideo: General Video Foundation Models,ECCV,2024,https://arxiv.org/abs/2212.03191,method+benchmark,4,4,4,视频基础模型，生成式+对比式联合预训练
+CoOp: Learning to Prompt for Vision-Language Models,IJCV,2022,https://arxiv.org/abs/2109.01134,method+benchmark,4,4,4,可学习连续prompt开山
+CoCoOp: Conditional Prompt Learning,CVPR,2022,https://arxiv.org/abs/2203.05557,method+benchmark,4,4,4,meta-net按实例动态生成prompt
+MaPLe: Multi-modal Prompt Learning,CVPR,2023,https://arxiv.org/abs/2303.03515,method+benchmark,4,4,4,视觉+文本双侧prompt跨层耦合
+CLIP-Adapter,ECCV,2022,https://arxiv.org/abs/2110.04544,method+benchmark,3,3,3,特征adapter MLP残差融合
+Tip-Adapter: Training-free Adaption of CLIP,NeurIPS,2022,https://arxiv.org/abs/2202.03929,method+benchmark,4,4,4,cache model少样本无训练推理
+AIM (ST-Adapter): Adapting Image Models for Efficient Video,ICCV,2023,https://arxiv.org/abs/2303.06943,method+benchmark,4,4,4,adapter注入frozen图像模型到视频
+ViFi-CLIP: Video Fine-tuned CLIP,ICCV,2023,https://arxiv.org/abs/2301.01203,method+benchmark,4,4,4,极简视频微调强基线
+MIST,AAAI,2023,https://arxiv.org/abs/2303.08954,method+benchmark,3,3,3,frozen CLIP+视频adapter
+ViLT-CLIP: Video and Language Tuning CLIP with Multimodal Prompt,AAAI,2024,https://ojs.aaai.org/index.php/AAAI/article/view/28347,method+benchmark,3,3,3,视频语言多模态prompt调优
+Exploring the Adaptation Strategy of CLIP for Few-Shot Action Recognition,ACM MM,2024,https://dl.acm.org/doi/10.1145/3688863.3689571,method+benchmark,3,3,3,few-shot下CLIP适配策略系统对比
+RAP: Revisiting Attention Pooling for Vision Transformers,NeurIPS,2023,https://arxiv.org/abs/2207.00261,method+benchmark,4,4,4,可学习注意力池化

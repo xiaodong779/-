@@ -1,0 +1,63 @@
+version: "0.4.5"
+project:
+  title: "DG-TDM: Dual-Granularity Temporal Dynamics Modeling with Spatial Prior Guidance for Fine-Grained Action Recognition"
+  framework_name: "DG-TDM"
+  modules:
+    - name: "MoDeA"
+      full: "Motion Deformation Attention"
+      code_path: "AMS-Net-main/mmaction/models/common/adsta.py (ResNet_DeformAttention)"
+      design_note: "deformable spatio-temporal sampling branch that predicts cross-frame motion displacement"
+    - name: "TSA"
+      full: "Temporal State Aggregation Module"
+      code_path: "AMS-Net-main/mmaction/models/common/adsta.py (SimpleMambaGate)"
+      design_note: "bidirectional state-scan temporal aggregation that models channel-to-temporal variation"
+    - name: "STG"
+      full: "Spatio-Temporal Guidance Block"
+      code_path: "AMS-Net-main/mmaction/models/common/bw_stg.py (BWSTGBlock)"
+      design_note: "bilateral window cross-attention guiding the lower branch to focus on action regions via spatial priors"
+    - name: "SPE"
+      full: "Frozen CLIP ViT-B/16 Encoder (spatial expert)"
+      code_path: "AMS-Net-main/mmaction/models/common/evl/frozen_evl_vit_branch.py"
+      design_note: "frozen CLIP spatial-semantic prior encoder providing action-region priors to the STG"
+  source_code: "AMS-Net-main/ (mmaction2 based)"
+  base_paper: "Diving48 fine-grained action recognition"
+target_venue:
+  name: "NeurIPS"
+  policy_status: "NeurIPS 2026 template initialized; recheck current policy at submission"
+stage: "writing-draft-2-expanded"
+artifacts:
+  idea_document: "artifacts/01-idea-document.md"
+  result_tables: "artifacts/02-result-tables.md"
+  training_evidence: "artifacts/03-training-evidence.md"
+  manuscript_tex: "paper/main.tex"
+  manuscript_style: "paper/neurips_2026.sty"
+  bib: "paper/references.bib"
+claims:
+  - id: C1
+    text: "Fine-grained action recognition requires capturing subtle cross-frame motion changes; the MoDeA branch explicitly predicts deformation offsets in the spatio-temporal domain to encode motion dynamics."
+    support: "adsta.py ResNet_DeformAttention design; ablation to be run"
+  - id: C2
+    text: "Frozen CLIP provides strong spatial priors that can guide a lightweight video branch to focus on action regions even when backgrounds are similar; STG applies bilateral window cross-attention with adaptive gating for this purpose."
+    support: "bw_stg.py BWSTGBlock design; Diving48 background-similar setup"
+  - id: C3
+    text: "Modeling channel-to-temporal variation with bidirectional state memory (TSA) complements local motion encoding and improves action dynamics."
+    support: "adsta.py SimpleMambaGate design; ablation to be run"
+  - id: C4
+    text: "DG-TDM improves top-1 accuracy on Diving48 over the frozen-CLIP and ResNet baselines."
+    support: "PENDING: Diving48 training in progress (56/75 epochs at last check)"
+experiments:
+  source: "user's own training (AMS-Net repo)"
+  no_new_training: false
+  datasets:
+    - "Diving48"
+  baselines:
+    - "Frozen CLIP / ResNet-50 temporal-action-encoder baseline"
+    - "Deformable Video Transformer (DVT, CVPR 2022) related baselines"
+  key_references:
+    - "DVT (Deformable Video Transformer, CVPR 2022): deformable video attention for MoDeA"
+    - "VideoMamba (ECCV 2024): bidirectional spatio-temporal state space model for TSA"
+  current_best: "TBD (training in progress)"
+  pending: "Diving48 training in progress; final validation/test accuracy to be supplied"
+revision_ledger: "artifacts/04-revision-ledger.md"
+submission_checks:
+  mode: "later; must compile PDF and check anonymity/page limit"

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img">
+
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#8EA0C5"/>
+  </marker>
+  <filter id="softShadow" x="-15%" y="-20%" width="130%" height="145%">
+    <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#2F3A5F" flood-opacity="0.10"/>
+  </filter>
+  <linearGradient id="hero" x1="0" x2="1" y1="0" y2="1">
+    <stop offset="0%" stop-color="#F8FAFF"/>
+    <stop offset="100%" stop-color="#EEF3FF"/>
+  </linearGradient>
+</defs>
+
+<rect width="1200" height="430" fill="url(#hero)"/>
+<style>
+text { font-family: Inter, "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif; }
+.small { fill: #667085; font-size: 13px; }
+.mono { font-family: "JetBrains Mono", Consolas, monospace; }
+</style>
+<text x="60" y="58" font-size="30" font-weight="800" fill="#233044" text-anchor="start">安装形态</text>
+<rect x="120" y="150" width="240" height="145" rx="24" fill="#DDEBFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="240" y="205" font-size="20" font-weight="850" fill="#233044" text-anchor="middle">仓库</text>
+<text x="240" y="245" font-size="14" font-weight="650" fill="#667085" text-anchor="middle">CCFA-Skills/</text>
+<rect x="490" y="150" width="240" height="145" rx="24" fill="#E9DFFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="610" y="205" font-size="20" font-weight="850" fill="#233044" text-anchor="middle">已安装 skills</text>
+<text x="610" y="245" font-size="14" font-weight="650" fill="#667085" text-anchor="middle">~/.codex/skills/</text>
+<rect x="860" y="150" width="240" height="145" rx="24" fill="#DFF7EA" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="980" y="205" font-size="20" font-weight="850" fill="#233044" text-anchor="middle">本地项目</text>
+<text x="980" y="245" font-size="14" font-weight="650" fill="#667085" text-anchor="middle">paper workspace</text>
+<line x1="365" y1="222" x2="485" y2="222" stroke="#AAB7D4" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<line x1="735" y1="222" x2="855" y2="222" stroke="#AAB7D4" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+</svg>

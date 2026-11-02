@@ -1,0 +1,21 @@
+\begin{abstract}
+Fine-grained action recognition requires distinguishing actions that look
+nearly identical in single frames and differ mainly in how the body moves.
+Two difficulties follow from this setting. Since all classes share a nearly
+identical background, the action region must be located rather than inferred
+from scene cues; and since the discriminating signal is motion, it must be
+captured at two time scales, the short-term displacement of body parts over a
+few frames and the long-term evolution of the whole sequence. We propose
+\dgtdm, a three-branch framework that assigns these two requirements to
+separate branches. A frozen CLIP encoder serves as a spatial expert, and a
+spatio-temporal guidance (STG) branch injects its stable priors into a
+lightweight 2D temporal encoder through bilateral window cross-attention and
+adaptive gating, so that the encoder concentrates on the action region. The
+core of the framework is a dual-granularity temporal dynamics module that
+adds temporal modeling to the 2D backbone at the two time scales: the MoDeA
+branch predicts dense cross-frame sampling offsets to follow short-term
+body-part displacement, and the TSA branch maintains a long-term state
+memory to model the sequence-level evolution. We evaluate the framework on
+Diving48 and Something-Something V2 and use ablations to isolate the
+contribution of each component.
+\end{abstract}

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img">
+
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#8EA0C5"/>
+  </marker>
+  <filter id="softShadow" x="-15%" y="-20%" width="130%" height="145%">
+    <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#2F3A5F" flood-opacity="0.10"/>
+  </filter>
+  <linearGradient id="hero" x1="0" x2="1" y1="0" y2="1">
+    <stop offset="0%" stop-color="#F8FAFF"/>
+    <stop offset="100%" stop-color="#EEF3FF"/>
+  </linearGradient>
+</defs>
+
+<rect width="1200" height="630" fill="url(#hero)"/>
+<style>
+text { font-family: Inter, "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif; }
+.small { fill: #667085; font-size: 13px; }
+.mono { font-family: "JetBrains Mono", Consolas, monospace; }
+</style>
+<text x="60" y="58" font-size="30" font-weight="800" fill="#233044" text-anchor="start">Clear boundaries between skills</text>
+<rect x="70" y="115" width="1060" height="62" rx="18" fill="#FFFFFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="100" y="153" font-size="16" font-weight="800" fill="#233044" text-anchor="start">Idea scoring</text>
+<text x="420" y="153" font-size="15" font-weight="800" fill="#9D7BFF" text-anchor="start">ccf-idea-reviewer</text>
+<text x="720" y="153" font-size="14" font-weight="600" fill="#667085" text-anchor="start">scores and ranks; does not rewrite</text>
+<rect x="70" y="193" width="1060" height="62" rx="18" fill="#FFFFFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="100" y="231" font-size="16" font-weight="800" fill="#233044" text-anchor="start">Idea shaping</text>
+<text x="420" y="231" font-size="15" font-weight="800" fill="#9D7BFF" text-anchor="start">ccf-idea-optimizer</text>
+<text x="720" y="231" font-size="14" font-weight="600" fill="#667085" text-anchor="start">turns fuzzy ideas into method plans</text>
+<rect x="70" y="271" width="1060" height="62" rx="18" fill="#FFFFFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="100" y="309" font-size="16" font-weight="800" fill="#233044" text-anchor="start">Literature retrieval</text>
+<text x="420" y="309" font-size="15" font-weight="800" fill="#9D7BFF" text-anchor="start">ccf-literature-searcher</text>
+<text x="720" y="309" font-size="14" font-weight="600" fill="#667085" text-anchor="start">searches prior art and benchmarks</text>
+<rect x="70" y="349" width="1060" height="62" rx="18" fill="#FFFFFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="100" y="387" font-size="16" font-weight="800" fill="#233044" text-anchor="start">Experiment semantics</text>
+<text x="420" y="387" font-size="15" font-weight="800" fill="#9D7BFF" text-anchor="start">ccf-experiment-designer</text>
+<text x="720" y="387" font-size="14" font-weight="600" fill="#667085" text-anchor="start">chooses evidence structure, not rendering</text>
+<rect x="70" y="427" width="1060" height="62" rx="18" fill="#FFFFFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="100" y="465" font-size="16" font-weight="800" fill="#233044" text-anchor="start">Manuscript editing</text>
+<text x="420" y="465" font-size="15" font-weight="800" fill="#9D7BFF" text-anchor="start">ccf-paper-writer</text>
+<text x="720" y="465" font-size="14" font-weight="600" fill="#667085" text-anchor="start">changes prose; humanization preflight applies</text>
+<rect x="70" y="505" width="1060" height="62" rx="18" fill="#FFFFFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="100" y="543" font-size="16" font-weight="800" fill="#233044" text-anchor="start">Rendered visuals</text>
+<text x="420" y="543" font-size="15" font-weight="800" fill="#9D7BFF" text-anchor="start">ccf-visual-composer</text>
+<text x="720" y="543" font-size="14" font-weight="600" fill="#667085" text-anchor="start">uses GPT Image 2 first unless pure SVG is requested</text>
+</svg>

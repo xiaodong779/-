@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="720" viewBox="0 0 1400 720" role="img">
+
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#8EA0C5"/>
+  </marker>
+  <filter id="softShadow" x="-15%" y="-20%" width="130%" height="145%">
+    <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#2F3A5F" flood-opacity="0.10"/>
+  </filter>
+  <linearGradient id="hero" x1="0" x2="1" y1="0" y2="1">
+    <stop offset="0%" stop-color="#F8FAFF"/>
+    <stop offset="100%" stop-color="#EEF3FF"/>
+  </linearGradient>
+</defs>
+
+<rect width="1400" height="720" fill="url(#hero)"/>
+<style>
+text { font-family: Inter, "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif; }
+.small { fill: #667085; font-size: 13px; }
+.mono { font-family: "JetBrains Mono", Consolas, monospace; }
+</style>
+<text x="60" y="62" font-size="32" font-weight="800" fill="#233044" text-anchor="start">CCFA Skills 家族</text>
+<text x="60" y="92" font-size="16" font-weight="500" fill="#667085" text-anchor="start">从研究方向到投稿检查，分工清晰，衔接连贯</text>
+<rect x="56" y="130" width="1288" height="535" rx="30" fill="#FFFFFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<rect x="90" y="275" width="185" height="170" rx="35" fill="#DDEBFF" stroke="#D9E1F2" stroke-width="1.4" />
+<circle cx="182" cy="330" r="31" fill="#FFFFFF" stroke="#7AA7FF" stroke-width="2.0" />
+<text x="182" y="337" font-size="26" font-weight="900" fill="#7AA7FF" text-anchor="middle">↗</text>
+<text x="182" y="388" font-size="19" font-weight="850" fill="#233044" text-anchor="middle">理解任务</text>
+<text x="182" y="418" font-size="14" font-weight="700" fill="#667085" text-anchor="middle">ccf-common</text>
+<path d="M 275 360 C 330 360 340 205 400 205" fill="none" stroke="#7AA7FF" stroke-width="3.0" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 275 360 C 330 360 340 325 400 325" fill="none" stroke="#58C58A" stroke-width="3.0" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 275 360 C 330 360 340 445 400 445" fill="none" stroke="#FF8A8A" stroke-width="3.0" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M 275 360 C 330 360 340 565 400 565" fill="none" stroke="#FFB552" stroke-width="3.0" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="400" y="158" width="470" height="94" rx="28" fill="#E9DFFF" stroke="#9D7BFF" stroke-width="1.4" />
+<circle cx="442" cy="205" r="23" fill="#FFFFFF" stroke="#9D7BFF" stroke-width="1.6" />
+<text x="442" y="212" font-size="19" font-weight="850" fill="#9D7BFF" text-anchor="middle">◇</text>
+<text x="480" y="200" font-size="18" font-weight="850" fill="#233044" text-anchor="start">研究方向</text>
+<text x="480" y="228" font-size="13" font-weight="650" fill="#667085" text-anchor="start">选题评审 · 选题优化</text>
+<path d="M 870 205 C 920 205 920 360 960 360" fill="none" stroke="#9D7BFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="400" y="278" width="470" height="94" rx="28" fill="#DFF7EA" stroke="#58C58A" stroke-width="1.4" />
+<circle cx="442" cy="325" r="23" fill="#FFFFFF" stroke="#58C58A" stroke-width="1.6" />
+<text x="442" y="332" font-size="19" font-weight="850" fill="#58C58A" text-anchor="middle">▦</text>
+<text x="480" y="320" font-size="18" font-weight="850" fill="#233044" text-anchor="start">证据构建</text>
+<text x="480" y="348" font-size="13" font-weight="650" fill="#667085" text-anchor="start">文献 · 实验 · 完整性核验</text>
+<path d="M 870 325 C 920 325 920 360 960 360" fill="none" stroke="#58C58A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="400" y="398" width="470" height="94" rx="28" fill="#FFE1E1" stroke="#FF8A8A" stroke-width="1.4" />
+<circle cx="442" cy="445" r="23" fill="#FFFFFF" stroke="#FF8A8A" stroke-width="1.6" />
+<text x="442" y="452" font-size="19" font-weight="850" fill="#FF8A8A" text-anchor="middle">¶</text>
+<text x="480" y="440" font-size="18" font-weight="850" fill="#233044" text-anchor="start">论文叙事</text>
+<text x="480" y="468" font-size="13" font-weight="650" fill="#667085" text-anchor="start">评审 · 写作 · 学术表达 · 审稿回复</text>
+<path d="M 870 445 C 920 445 920 360 960 360" fill="none" stroke="#FF8A8A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="400" y="518" width="470" height="94" rx="28" fill="#FFE9C7" stroke="#FFB552" stroke-width="1.4" />
+<circle cx="442" cy="565" r="23" fill="#FFFFFF" stroke="#FFB552" stroke-width="1.6" />
+<text x="442" y="572" font-size="19" font-weight="850" fill="#FFB552" text-anchor="middle">✦</text>
+<text x="480" y="560" font-size="18" font-weight="850" fill="#233044" text-anchor="start">科研交付</text>
+<text x="480" y="588" font-size="13" font-weight="650" fill="#667085" text-anchor="start">绘图 · 范文 · 投稿检查</text>
+<path d="M 870 565 C 920 565 920 360 960 360" fill="none" stroke="#FFB552" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="970" y="250" width="165" height="220" rx="34" fill="#F4F0FF" stroke="#9D7BFF" stroke-width="1.4" />
+<text x="1052" y="292" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">每项任务 · 明确负责</text>
+<circle cx="1052" cy="355" r="46" fill="#FFFFFF" stroke="#9D7BFF" stroke-width="2.2" />
+<text x="1052" y="349" font-size="16" font-weight="900" fill="#9D7BFF" text-anchor="middle">主责</text>
+<text x="1052" y="371" font-size="13" font-weight="750" fill="#667085" text-anchor="middle">模块</text>
+<rect x="991" y="420" width="122" height="32" rx="16" fill="#FFFFFF" stroke="#D9E1F2" stroke-width="1.4" />
+<text x="1052" y="441" font-size="12" font-weight="750" fill="#233044" text-anchor="middle">辅助检查</text>
+<path d="M 1135 360 C 1170 360 1170 360 1200 360" fill="none" stroke="#9D7BFF" stroke-width="3.0" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="1204" y="295" width="105" height="130" rx="26" fill="#DDEBFF" stroke="#7AA7FF" stroke-width="1.4" />
+<text x="1256" y="340" font-size="28" font-weight="900" fill="#58C58A" text-anchor="middle">✓</text>
+<text x="1256" y="379" font-size="13" font-weight="850" fill="#233044" text-anchor="middle">可追溯成果</text>
+<text x="1256" y="402" font-size="11" font-weight="650" fill="#667085" text-anchor="middle">ccfa.yaml</text>
+<text x="635" y="633" font-size="13" font-weight="650" fill="#667085" text-anchor="middle">项目规划 · 项目起步 · 家族维护</text>
+</svg>

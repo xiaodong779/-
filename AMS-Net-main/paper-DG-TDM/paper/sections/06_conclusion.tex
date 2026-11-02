@@ -1,0 +1,25 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We presented \dgtdm, a three-branch framework for fine-grained action
+recognition. The task is hard because the classes look almost identical in
+appearance, and the difference lies in how the body moves. We decomposed this
+into two problems and gave each to a separate branch. A frozen CLIP encoder
+handles localization, supplying stable spatial priors learned from
+large-scale pre-training, and a spatio-temporal guidance branch uses them to
+focus a lightweight temporal encoder on the action region. Because a 2D
+backbone has no temporal modeling of its own, a dual-granularity temporal
+dynamics module adds it on the 2D feature stream: MoDeA tracks short-term
+body-part motion with dense deformable sampling, and TSA keeps a long-term
+memory over the sequence to characterize the overall temporal response. The
+framework thus targets the two difficulties that make fine-grained actions
+hard, namely similar backgrounds and subtle body movement, without inflating
+the backbone into a 3D network.
+
+Ablations on Diving48 confirm that the two temporal branches and the guidance
+all carry part of the accuracy: every variant that removes the deformable
+sampling of MoDeA, turns the TSA state into a forward-only scan, or disables
+the per-stage prior injection drops below the full model. The frozen CLIP
+expert could in principle be replaced by a cheaper spatial encoder trained
+end-to-end; we leave that exchange, together with an extension to further
+benchmarks, to future work.

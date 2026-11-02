@@ -1,0 +1,35 @@
+from .conv2plus1d import Conv2plus1d
+from .conv_audio import ConvAudio
+from .lfb import LFB
+from .tam import TAM
+from .agpm import AGPM
+from .dgam import DGAM
+
+# 自定义架构模块
+from .tcm import TCM
+from .mgfm import MGFM
+
+# ================= 💥 前端：极性感知运动增强器 =================
+from .pame import PolarityAwareMotionEnhancer
+
+# ================= 💥 前端：极性感知运动增强器 Pro 版 =================
+from .pame_pro import PolarityAwareMotionEnhancer_Pro
+
+# ================= ⏱️ 时序：自适应多尺度时序上下文模块 =================
+from .mtcm import AdaptiveMTCM
+
+# ================= ⏱️ 时序：自适应多尺度时序上下文模块 Pro 版 =================
+from .mtcm_pro import AdaptiveMTCM_Pro
+
+# ================= 🔗 双分支 STG 门控交互模块 =================
+from .bw_stg import BWSTGBlock
+
+__all__ = [
+    'ConvAudio', 'Conv2plus1d', 'LFB', 'TAM', 'AGPM', 'DGAM',
+    'TCM', 'MGFM',
+    'PolarityAwareMotionEnhancer',
+    'PolarityAwareMotionEnhancer_Pro',   # ★ 新增
+    'AdaptiveMTCM',
+    'AdaptiveMTCM_Pro',
+    'BWSTGBlock',
+]

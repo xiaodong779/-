@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="530" viewBox="0 0 1600 530" role="img">
+
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#8EA0C5"/>
+  </marker>
+  <filter id="softShadow" x="-15%" y="-20%" width="130%" height="145%">
+    <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#2F3A5F" flood-opacity="0.10"/>
+  </filter>
+  <linearGradient id="hero" x1="0" x2="1" y1="0" y2="1">
+    <stop offset="0%" stop-color="#F8FAFF"/>
+    <stop offset="100%" stop-color="#EEF3FF"/>
+  </linearGradient>
+</defs>
+
+<rect width="1600" height="530" fill="url(#hero)"/>
+<style>
+text { font-family: Inter, "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif; }
+.small { fill: #667085; font-size: 13px; }
+.mono { font-family: "JetBrains Mono", Consolas, monospace; }
+</style>
+<text x="60" y="62" font-size="30" font-weight="800" fill="#233044" text-anchor="start">彼此衔接的科研工作流</text>
+<text x="60" y="92" font-size="15" font-weight="500" fill="#667085" text-anchor="start">面向 CCF 论文研究的协作式 skill 家族</text>
+<rect x="55" y="155" width="146" height="150" rx="22" fill="#DDEBFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="128.0" y="188" font-size="20" font-weight="900" fill="#233044" text-anchor="middle">1</text>
+<text x="128.0" y="237" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">规划</text>
+<text x="128.0" y="280" font-size="11" font-weight="650" fill="#667085" text-anchor="middle">项目规划</text>
+<line x1="205" y1="230" x2="220" y2="230" stroke="#AAB7D4" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="225" y="155" width="146" height="150" rx="22" fill="#E9DFFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="298.0" y="188" font-size="20" font-weight="900" fill="#233044" text-anchor="middle">2</text>
+<text x="298.0" y="224" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">评审</text>
+<text x="298.0" y="245" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">选题</text>
+<text x="298.0" y="280" font-size="11" font-weight="650" fill="#667085" text-anchor="middle">选题评审</text>
+<line x1="375" y1="230" x2="390" y2="230" stroke="#AAB7D4" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="395" y="155" width="146" height="150" rx="22" fill="#DFF7EA" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="468.0" y="188" font-size="20" font-weight="900" fill="#233044" text-anchor="middle">3</text>
+<text x="468.0" y="224" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">检索</text>
+<text x="468.0" y="245" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">文献</text>
+<text x="468.0" y="280" font-size="11" font-weight="650" fill="#667085" text-anchor="middle">文献检索</text>
+<line x1="545" y1="230" x2="560" y2="230" stroke="#AAB7D4" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="565" y="155" width="146" height="150" rx="22" fill="#DFF7EA" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="638.0" y="188" font-size="20" font-weight="900" fill="#233044" text-anchor="middle">4</text>
+<text x="638.0" y="224" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">设计</text>
+<text x="638.0" y="245" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">实验</text>
+<text x="638.0" y="280" font-size="11" font-weight="650" fill="#667085" text-anchor="middle">实验设计</text>
+<line x1="715" y1="230" x2="730" y2="230" stroke="#AAB7D4" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="735" y="155" width="146" height="150" rx="22" fill="#FFE1E1" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="808.0" y="188" font-size="20" font-weight="900" fill="#233044" text-anchor="middle">5</text>
+<text x="808.0" y="224" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">撰写</text>
+<text x="808.0" y="245" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">论文</text>
+<text x="808.0" y="280" font-size="11" font-weight="650" fill="#667085" text-anchor="middle">论文写作</text>
+<line x1="885" y1="230" x2="900" y2="230" stroke="#AAB7D4" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="905" y="155" width="146" height="150" rx="22" fill="#FFE1E1" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="978.0" y="188" font-size="20" font-weight="900" fill="#233044" text-anchor="middle">6</text>
+<text x="978.0" y="224" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">改善</text>
+<text x="978.0" y="245" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">表达</text>
+<text x="978.0" y="280" font-size="11" font-weight="650" fill="#667085" text-anchor="middle">学术表达</text>
+<line x1="1055" y1="230" x2="1070" y2="230" stroke="#AAB7D4" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1075" y="155" width="146" height="150" rx="22" fill="#FFE9C7" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="1148.0" y="188" font-size="20" font-weight="900" fill="#233044" text-anchor="middle">7</text>
+<text x="1148.0" y="224" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">核验</text>
+<text x="1148.0" y="245" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">证据</text>
+<text x="1148.0" y="280" font-size="11" font-weight="650" fill="#667085" text-anchor="middle">完整性核验</text>
+<line x1="1225" y1="230" x2="1240" y2="230" stroke="#AAB7D4" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1245" y="155" width="146" height="150" rx="22" fill="#FFE9C7" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="1318.0" y="188" font-size="20" font-weight="900" fill="#233044" text-anchor="middle">8</text>
+<text x="1318.0" y="224" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">绘制</text>
+<text x="1318.0" y="245" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">图表</text>
+<text x="1318.0" y="280" font-size="11" font-weight="650" fill="#667085" text-anchor="middle">科研绘图</text>
+<line x1="1395" y1="230" x2="1410" y2="230" stroke="#AAB7D4" stroke-width="2.0" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1415" y="155" width="146" height="150" rx="22" fill="#EEF2FF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="1488.0" y="188" font-size="20" font-weight="900" fill="#233044" text-anchor="middle">9</text>
+<text x="1488.0" y="224" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">检查</text>
+<text x="1488.0" y="245" font-size="15" font-weight="850" fill="#233044" text-anchor="middle">投稿</text>
+<text x="1488.0" y="280" font-size="11" font-weight="650" fill="#667085" text-anchor="middle">投稿检查</text>
+<rect x="340" y="365" width="920" height="82" rx="22" fill="#FFFFFF" stroke="#D9E1F2" stroke-width="1.4" filter="url(#softShadow)"/>
+<text x="800" y="408" font-size="17" font-weight="700" fill="#233044" text-anchor="middle">学术表达模块改善文字，论文写作模块保持论证连贯。</text>
+</svg>
